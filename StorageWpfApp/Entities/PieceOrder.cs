@@ -1,6 +1,9 @@
-﻿namespace StorageWpfApp.Entities
+﻿using GalaSoft.MvvmLight;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace StorageWpfApp.Entities
 {
-    public class PieceOrder
+    public class PieceOrder : ObservableObject
     {
         public int Id { get; set; }
 
@@ -8,13 +11,49 @@
 
         public Consignment Consignment { get; set; }
 
-        public double Discount { get; set; }
+        private double _discount;
+        public double Discount
 
-        public int Count { get; set; }
+        {
+            get => _discount;
+            set
+            {
+                if (value >= 0 && value <= Consignment.PiecePrice.Value)
+                {
+                    Set(ref _discount, value);
+
+                    RaisePropertyChanged(nameof(Sum));
+                }
+            }
+        }
+
+        private int _count;
+        public int Count
+        {
+            get => _count;
+            set
+            {
+                if (value > 0)
+                {
+                    Set(ref _count, value);
+
+                    RaisePropertyChanged(nameof(Sum));
+                }
+            }
+        }
 
         public int InvoiceId { get; set; }
 
         public Invoice Invoice { get; set; }
+
+        [NotMapped]
+        public double Sum
+        {
+            get
+            {
+                return (Consignment.PiecePrice.Value - Discount) * Count;
+            }
+        }
 
     }
 }
