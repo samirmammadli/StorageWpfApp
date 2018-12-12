@@ -10,7 +10,8 @@
         mc:Ignorable="d"
         Title="Партии закупок" Height="600" Width="800"
         x:Name="Consignments"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        Background="#fafafa">
     <Window.InputBindings>
         <KeyBinding 
                     Key="Esc"

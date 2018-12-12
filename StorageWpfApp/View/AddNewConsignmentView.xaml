@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:StorageWpfApp.View"
         mc:Ignorable="d"
         x:Name="AddConsignment"
-        Title="Редактор партий" Height="510" Width="600">
+        Title="Редактор партий" Height="510" Width="600"
+        Background="#fafafa">
     <Window.InputBindings>
         <KeyBinding 
                     Key="Esc"

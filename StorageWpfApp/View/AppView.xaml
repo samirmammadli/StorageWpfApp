@@ -12,6 +12,7 @@
         MinWidth="1000"
         x:Name="Window"
         WindowState="Maximized"
+        Background="#fafafa"
         >
     <Window.Resources>
         <ResourceDictionary Source="../Resources/DataTemplates.xaml">
