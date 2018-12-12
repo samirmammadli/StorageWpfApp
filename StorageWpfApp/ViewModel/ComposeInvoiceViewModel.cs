@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.CommandWpf;
 using StorageWpfApp.Entities;
 using StorageWpfApp.ExtensionMethods;
+using StorageWpfApp.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -60,12 +61,66 @@ namespace StorageWpfApp.ViewModel
             }
         }
 
-        private RelayCommand _test;
-        public RelayCommand Test
+        private RelayCommand<Window> _addSingleCons;
+        public RelayCommand<Window> AddSingleCons
         {
-            get => _test ?? (_test = new RelayCommand(
-                () => MessageBox.Show(singleOrders.FirstOrDefault().Count.ToString())
+            get => _addSingleCons ?? (_addSingleCons = new RelayCommand<Window>(
+                wnd =>
+                {
+                    var context = new ConsignmentsViewModel(_db, ConsignmentSelectionType.Signle);
+                    var view = new ConsignmentsView
+                    {
+                        Owner = wnd,
+                        DataContext = context
+                    };
+                    var result = view.ShowDialog();
+                    if (result.HasValue && result.Value)
+                        AddSingleOrder(context.SelectedConsignment);
+                }
+
             ));
+        }
+
+        private RelayCommand<Window> _addPieceCons;
+        public RelayCommand<Window> AddPieceCons
+        {
+            get => _addPieceCons ?? (_addPieceCons = new RelayCommand<Window>(
+                wnd =>
+                {
+                    var context = new ConsignmentsViewModel(_db, ConsignmentSelectionType.Piece);
+                    var view = new ConsignmentsView
+                    {
+                        Owner = wnd,
+                        DataContext = context
+                    };
+                    var result = view.ShowDialog();
+                    if (result.HasValue && result.Value)
+                        AddPieceOrder(context.SelectedConsignment);
+                }
+
+            ));
+        }
+
+        private void AddSingleOrder(Consignment cons)
+        {
+            SingleOrders.Add(new SingleOrder
+            {
+                Consignment = cons,
+                Invoice = Invoice,
+                Count = 1,
+                Discount = 0
+            });
+        }
+
+        private void AddPieceOrder(Consignment cons)
+        {
+            PieceOrders.Add(new PieceOrder
+            {
+                Consignment = cons,
+                Invoice = Invoice,
+                Count = 1,
+                Discount = 0
+            });
         }
 
         public ComposeInvoiceViewModel(ProjectContext db)

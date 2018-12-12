@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:StorageWpfApp.View"
         WindowStartupLocation="CenterOwner"
         mc:Ignorable="d"
-        Title="Накладная" Height="800" Width="1025">
+        Title="Накладная" Height="800" Width="1025"
+        Name="ComposeInvoice">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,7 +18,7 @@
     <Window.InputBindings>
         <KeyBinding 
                     Key="Esc"
-                    Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=ClientsWnd}" />
+                    Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=ComposeInvoice}" />
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -43,13 +44,13 @@
                 <StackPanel Grid.Column="0">
                     <Label>Целый товар:</Label>
                     <StackPanel Orientation="Horizontal">
-                        <Button Command="{Binding Test}" HorizontalAlignment="Right" Width="100">Добавить..</Button>
+                        <Button Command="{Binding AddSingleCons}" CommandParameter="{Binding ElementName=ComposeInvoice}" HorizontalAlignment="Right" Width="100">Добавить..</Button>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <Label>Штучный товар:</Label>
                     <StackPanel Orientation="Horizontal">
-                        <Button HorizontalAlignment="Right" Width="100">Добавить..</Button>
+                        <Button Command="{Binding AddPieceCons}" CommandParameter="{Binding ElementName=ComposeInvoice}" HorizontalAlignment="Right" Width="100">Добавить..</Button>
                     </StackPanel>
                 </StackPanel>
                 <!--<StackPanel VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0">

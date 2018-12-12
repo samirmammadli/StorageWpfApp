@@ -16,11 +16,17 @@ using System.Windows.Controls;
 using System.Windows.Data;
 
 
+
+
 namespace StorageWpfApp.ViewModel
 {
     class ConsignmentsViewModel : ViewModelBase
     {
         private ProjectContext _db;
+
+
+        public ConsignmentSelectionType SelectionType { get; set; }
+
 
         private bool _showEmptyConsignments;
         public bool ShowEmptyConsignments
@@ -51,6 +57,17 @@ namespace StorageWpfApp.ViewModel
             Consignments = new ListCollectionView(_db.Consignments.Local.ToObservableCollection());
             Consignments.CustomSort = new ConsignmentDateSorting();
             ProductsPricingCalculating();
+        }
+
+        public ConsignmentsViewModel(ProjectContext db, ConsignmentSelectionType type)
+        {
+            _db = db;
+            SelectionType = type;
+            Groups = _db.Groups.Local.ToObservableCollection();
+            Consignments = new ListCollectionView(_db.Consignments.Local.ToObservableCollection());
+            Consignments.CustomSort = new ConsignmentDateSorting();
+            ProductsPricingCalculating();
+            SearchBy();
         }
 
         public ConsignmentsViewModel(ProjectContext db, Product prd)
@@ -146,21 +163,30 @@ namespace StorageWpfApp.ViewModel
             Consignments.Filter = c =>
             {
                 var cons = c as Consignment;
-                return (CodePatternSearch(cons.Product.Code) &&
-
+                return CodePatternSearch(cons.Product.Code) &&
+                                                        FilterBySelectionType(cons) &&
                                                         cons.Product.Name.Contains(PName) &&
-                                                        GroupSearch(cons.Product.Group));
+                                                        GroupSearch(cons.Product.Group);
             };
 
             ProductsPricingCalculating();
         }
 
+        //Todo: Show Empty Consignments
         private bool SearchEmptyConsignments(Consignment cons)
         {
             if (ShowEmptyConsignments)
                 return true;
             else
                 return (cons.CurrentPieceQuantity > 0 && cons.Quantity > 0);
+        }
+
+        private bool FilterBySelectionType(Consignment cons)
+        {
+            if (SelectionType == ConsignmentSelectionType.Piece && !cons.IsPieceAllowed)
+                return false;
+
+            return true;
         }
 
         private void ProductsPricingCalculating()

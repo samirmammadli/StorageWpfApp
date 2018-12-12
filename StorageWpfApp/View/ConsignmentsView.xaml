@@ -9,7 +9,8 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="Партии закупок" Height="600" Width="800"
-        x:Name="Consignments">
+        x:Name="Consignments"
+        WindowStartupLocation="CenterOwner">
     <Window.InputBindings>
         <KeyBinding 
                     Key="Esc"

@@ -216,6 +216,7 @@
     <Compile Include="ViewModel\AddProductViewModel.cs" />
     <Compile Include="ViewModel\AddProductWithConsignmentViewModel.cs" />
     <Compile Include="ViewModel\ComposeInvoiceViewModel.cs" />
+    <Compile Include="ViewModel\ConsignmentSelectionType.cs" />
     <Compile Include="ViewModel\ConsignmentsViewModel.cs" />
     <Compile Include="ViewModel\EditClientViewModel.cs" />
     <Compile Include="ViewModel\EditGroupViewModel.cs" />
