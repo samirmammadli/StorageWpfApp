@@ -29,10 +29,13 @@ namespace StorageWpfApp.ViewModel
             set => Set(ref singleOrders, value);
         }
 
+        public Invoice Invoice { get; set; }
+
 
         public ComposeInvoiceViewModel(ProjectContext db)
         {
             _db = db;
+            Invoice = new Invoice();
             Products = _db.Products.Local.ToList();
         }
     }
