@@ -27,6 +27,7 @@ namespace StorageWpfApp.ViewModel
 
         public ConsignmentSelectionType SelectionType { get; set; }
 
+        public Visibility SelectionVisibility { get; set; } = Visibility.Collapsed;
 
         private bool _showEmptyConsignments;
         public bool ShowEmptyConsignments
@@ -62,6 +63,7 @@ namespace StorageWpfApp.ViewModel
         public ConsignmentsViewModel(ProjectContext db, ConsignmentSelectionType type)
         {
             _db = db;
+            SelectionVisibility = Visibility.Visible;
             SelectionType = type;
             Groups = _db.Groups.Local.ToObservableCollection();
             Consignments = new ListCollectionView(_db.Consignments.Local.ToObservableCollection());
@@ -124,6 +126,20 @@ namespace StorageWpfApp.ViewModel
                 {
                     window.Close();
                 }
+            ));
+        }
+
+
+        private RelayCommand<Window> _selectConsignment;
+        public RelayCommand<Window> SelectConsignment
+        {
+            get => _selectConsignment ?? (_selectConsignment = new RelayCommand<Window>(
+                wnd =>
+                {
+                    wnd.DialogResult = true;
+                    wnd.Close();
+                },
+                wnd => SelectedConsignment != null
             ));
         }
 
@@ -209,9 +225,7 @@ namespace StorageWpfApp.ViewModel
 
         private bool GroupSearch(ProductGroup grp)
         {
-            if (SelectedGroup == null)
-                return false;
-            if (grp == null)
+            if (SelectedGroup == null || grp == null)
                 return true;
 
             return grp.Id == SelectedGroup.Id || SelectedGroup?.Id == -1;

@@ -31,7 +31,7 @@ namespace StorageWpfApp.Entities
                 }
             }
         }
-        
+
         private int _count;
         public int Count
         {
@@ -40,7 +40,10 @@ namespace StorageWpfApp.Entities
             {
                 if (value > 0)
                 {
-                    Set(ref _count, value);
+                    if (value > Consignment.Quantity)
+                        Set(ref _count, Consignment.Quantity);
+                    else
+                        Set(ref _count, value);
 
                     RaisePropertyChanged(nameof(Sum));
                 }

@@ -158,10 +158,10 @@
             </DataGrid>
         </GroupBox>
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,5,10" Grid.Row="2" Orientation="Horizontal">
-            <Button Margin="0,0,20,0" Width="100" Visibility="{Binding SelectionVisibility}" Command="{Binding SelectConsignment}" CommandParameter="{Binding ElementName=MainWnd}">Выбрать</Button>
-            <Button Margin="0,0,20,0" Width="100" Visibility="{Binding MainVisibility}" Command="{Binding AddConsignment}" CommandParameter="{Binding ElementName=MainWnd}">Закупка</Button>
-            <Button Margin="0,0,20,0" Width="100" Command="{Binding EditProduct}" CommandParameter="{Binding ElementName=MainWnd}">Изменить</Button>
-            <Button Margin="0,0,20,0" Width="100" Visibility="{Binding MainVisibility}" Command="{Binding ViewConsignments}" CommandParameter="{Binding ElementName=MainWnd}">Партии</Button>
+            <Button Margin="0,0,20,0" Width="100" Visibility="{Binding SelectionVisibility}" Command="{Binding SelectConsignment}" CommandParameter="{Binding ElementName=Consignments}">Выбрать</Button>
+            <Button Margin="0,0,20,0" Width="100" Visibility="{Binding MainVisibility}" Command="{Binding AddConsignment}" CommandParameter="{Binding ElementName=Consignments}">Закупка</Button>
+            <Button Margin="0,0,20,0" Width="100" Command="{Binding EditProduct}" CommandParameter="{Binding ElementName=Consignments}">Изменить</Button>
+            <Button Margin="0,0,20,0" Width="100" Visibility="{Binding MainVisibility}" Command="{Binding ViewConsignments}" CommandParameter="{Binding ElementName=Consignments}">Партии</Button>
         </StackPanel>
 
         <StatusBar Height="25" Grid.Row="3">

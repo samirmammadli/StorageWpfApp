@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using StorageWpfApp.ExtensionMethods;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StorageWpfApp.Entities
@@ -35,7 +36,10 @@ namespace StorageWpfApp.Entities
             {
                 if (value > 0)
                 {
-                    Set(ref _count, value);
+                    if (value > Consignment.TotalPieceQuantity.StringToInteger())
+                        Set(ref _count, Consignment.TotalPieceQuantity.StringToInteger());
+                    else
+                        Set(ref _count, value);
 
                     RaisePropertyChanged(nameof(Sum));
                 }
