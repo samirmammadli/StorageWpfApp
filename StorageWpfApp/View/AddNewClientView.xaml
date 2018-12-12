@@ -1,0 +1,119 @@
+﻿<Window x:Class="StorageWpfApp.View.AddNewClientView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StorageWpfApp.View"
+        mc:Ignorable="d"
+        Title="Клиенты" Height="270" Width="550"
+        ResizeMode="NoResize"
+        x:Name="AddNewClient">
+    <Window.InputBindings>
+        <KeyBinding 
+                    Key="Esc"
+                    Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=AddNewClient}" />
+    </Window.InputBindings>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Styles/EditStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <GroupBox Margin="10" Header="Клиент">
+        <StackPanel>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <StackPanel HorizontalAlignment="Left">
+                    <Label Margin="10,0,0,0">Имя клиента:</Label>
+                    <ContentControl Focusable="False" TabIndex="0">
+                        <ContentControl.Template>
+                            <ControlTemplate>
+                                <Grid FocusManager.FocusedElement="{Binding ElementName=CName}">
+                                    <TextBox Margin="10,0,0,0" Width="150" x:Name="CName" Grid.Column="0"  Text="{Binding ClientName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                                    <Button
+                                    Command="{Binding ClearSearchBox}"
+                                        Style="{StaticResource TbClearStyle}"
+                                        CommandParameter="{Binding ElementName=CName}"
+                                        Grid.Column="1">
+                                        <Image Style="{StaticResource clearImg}"/>
+                                    </Button>
+                                </Grid>
+                            </ControlTemplate>
+                        </ContentControl.Template>
+                    </ContentControl>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Left">
+                    <Label Margin="10,0,0,0">Фамилия клиента:</Label>
+                    <ContentControl Focusable="False" TabIndex="0">
+                        <ContentControl.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <TextBox Margin="10,0,0,0" Width="150" x:Name="CSurname" Grid.Column="0"  Text="{Binding ClientSurname, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                                    <Button
+                                    Command="{Binding ClearSearchBox}"
+                                        Style="{StaticResource TbClearStyle}"
+                                        CommandParameter="{Binding ElementName=CSurname}"
+                                        Grid.Column="1">
+                                        <Image Style="{StaticResource clearImg}"/>
+                                    </Button>
+                                </Grid>
+                            </ControlTemplate>
+                        </ContentControl.Template>
+                    </ContentControl>
+                </StackPanel>
+
+                <StackPanel  HorizontalAlignment="Left">
+                    <Label Margin="10,0,0,0">Моб. тел.:</Label>
+                    <ContentControl Focusable="False" >
+                        <ContentControl.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <TextBox Margin="10,0,0,0" Width="150" x:Name="CMobile" Grid.Column="0" Text="{Binding ClientPhone, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                                    <Button
+                                    Command="{Binding ClearSearchBox}"
+                                        Style="{StaticResource TbClearStyle}"
+                                        CommandParameter="{Binding ElementName=CMobile}"
+                                        Grid.Column="1">
+                                        <Image Style="{StaticResource clearImg}"/>
+                                    </Button>
+                                </Grid>
+                            </ControlTemplate>
+                        </ContentControl.Template>
+                    </ContentControl>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                <StackPanel Grid.Row="0" HorizontalAlignment="Left">
+                    <Label Margin="10,0,0,0">Почта:</Label>
+                    <ContentControl Focusable="False">
+                        <ContentControl.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <TextBox Margin="10,0,0,0" Width="150" x:Name="CMail" Grid.Column="0"  Text="{Binding ClientMail, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                                    <Button
+                                    Command="{Binding ClearSearchBox}"
+                                        Style="{StaticResource TbClearStyle}"
+                                        CommandParameter="{Binding ElementName=CMail}"
+                                        Grid.Column="1">
+                                        <Image Style="{StaticResource clearImg}"/>
+                                    </Button>
+                                </Grid>
+                            </ControlTemplate>
+                        </ContentControl.Template>
+                    </ContentControl>
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" HorizontalAlignment="Left">
+                    <Label Margin="10,0,0,0">Код клиента:</Label>
+                    <TextBox IsEnabled="False" Margin="10,0,0,0" Width="150" Text="{Binding ClientCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                </StackPanel>
+
+            </StackPanel>
+            <StackPanel Margin="0,15,0,0" Orientation="Horizontal">
+                <Button  IsDefault="True" Command="{Binding SaveChanges}" CommandParameter="{Binding ElementName=AddNewClient}" Margin="10,5,5,5">Сохранить</Button>
+                <Button  Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=AddNewClient}" Margin="5">Отмена</Button>
+            </StackPanel>
+        </StackPanel>
+    </GroupBox>
+</Window>

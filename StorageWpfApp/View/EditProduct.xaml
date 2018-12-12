@@ -1,0 +1,172 @@
+﻿<Window x:Class="StorageWpfApp.View.EditProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        xmlns:vm="clr-namespace:StorageWpfApp.ViewModel"
+        xmlns:v="clr-namespace:StorageWpfApp.View"
+        xmlns:local="clr-namespace:StorageWpfApp.View"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        Background="#fafafa"
+        WindowStyle="SingleBorderWindow"
+        Title="Редактор товаров" Height="215" Width="540"
+        SizeToContent="Height"
+        x:Name="EditWindow"
+        WindowStartupLocation="CenterOwner">
+    <Window.InputBindings>
+        <KeyBinding 
+                    Key="Esc"
+                    Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=EditWindow}" />
+    </Window.InputBindings>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Styles/EditStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <!--<TextBox Text="{Binding SelectedProduct.Name}"/>-->
+    <GroupBox Margin="10" Header="Товар">
+        <StackPanel>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <StackPanel HorizontalAlignment="Left">
+                    <Label Margin="10,0,0,0">Код товара:</Label>
+                    <ContentControl Focusable="False" TabIndex="0">
+                        <ContentControl.Template>
+                            <ControlTemplate>
+                                <Grid FocusManager.FocusedElement="{Binding ElementName=Pcode1}">
+                                    <TextBox Margin="10,0,0,0" Width="150" x:Name="Pcode1" Grid.Column="0"  Text="{Binding Pcode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                                    <Button
+                                    Command="{Binding ClearSearchBox}"
+                                        Style="{StaticResource TbClearStyle}"
+                                        CommandParameter="{Binding ElementName=Pcode1}"
+                                        Grid.Column="1">
+                                        <Image Style="{StaticResource clearImg}"/>
+                                    </Button>
+                                </Grid>
+                            </ControlTemplate>
+                        </ContentControl.Template>
+                    </ContentControl>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left">
+                    <Label Margin="10,0,0,0">Категория:</Label>
+                    <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="true" SelectedItem="{Binding SelectedGroup}" Margin="10,-3,0,0" Width="150" ItemsSource="{Binding Groups}" DisplayMemberPath="Name" IsEditable="True">
+                        <ComboBox.Resources>
+                            <!-- color of ComboBoxItem -->
+                            <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FFFFE1" />
+                            <!-- Mouse over color of ComboBoxItem -->
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFFFE1" />
+                        </ComboBox.Resources>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel  HorizontalAlignment="Left">
+                    <Label Margin="10,0,0,0">Наименование:</Label>
+                    <ContentControl Focusable="False" >
+                        <ContentControl.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <TextBox Margin="10,0,0,0" Width="150" x:Name="Pname" Grid.Column="0" Text="{Binding PName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                                    <Button
+                                    Command="{Binding ClearSearchBox}"
+                                        Style="{StaticResource TbClearStyle}"
+                                        CommandParameter="{Binding ElementName=Pname}"
+                                        Grid.Column="1">
+                                        <Image Style="{StaticResource clearImg}"/>
+                                    </Button>
+                                </Grid>
+                            </ControlTemplate>
+                        </ContentControl.Template>
+                    </ContentControl>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Visibility="{Binding IsPieceVisible}"  HorizontalAlignment="Left">
+                <Label Margin="10,0,0,0">Количество в упаковке:</Label>
+                <ContentControl Focusable="False" >
+                    <ContentControl.Template>
+                        <ControlTemplate>
+                            <Grid>
+                                <TextBox Margin="10,0,0,0" Width="150" x:Name="PPieceQuantity" Grid.Column="0" Text="{Binding PPieceQuantity, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                                <Button
+                                    Command="{Binding ClearSearchBox}"
+                                        Style="{StaticResource TbClearStyle}"
+                                        CommandParameter="{Binding ElementName=PPieceQuantity}"
+                                        Grid.Column="1">
+                                    <Image Style="{StaticResource clearImg}"/>
+                                </Button>
+                            </Grid>
+                        </ControlTemplate>
+                    </ContentControl.Template>
+                </ContentControl>
+            </StackPanel>
+            <!--<StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                <StackPanel Grid.Row="0" HorizontalAlignment="Left">
+                    <Label Margin="10,0,0,0">Количество:</Label>
+                    <ContentControl Focusable="False">
+                        <ContentControl.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <TextBox Margin="10,0,0,0" Width="150" x:Name="PCount" Grid.Column="0"  Text="{Binding PCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                                    <Button
+                                    Command="{Binding ClearSearchBox}"
+                                        Style="{StaticResource TbClearStyle}"
+                                        CommandParameter="{Binding ElementName=PCount}"
+                                        Grid.Column="1">
+                                        <Image Style="{StaticResource clearImg}"/>
+                                    </Button>
+                                </Grid>
+                            </ControlTemplate>
+                        </ContentControl.Template>
+                    </ContentControl>
+                </StackPanel>
+                
+                <StackPanel  HorizontalAlignment="Left">
+                    <Label Margin="10,0,0,0">Цена закупки:</Label>
+                    <ContentControl Focusable="False" >
+                        <ContentControl.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <TextBox Margin="10,0,0,0" Width="150" x:Name="PBuy" Grid.Column="0"  Text="{Binding PBuyPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                                    <Button
+                                    Command="{Binding ClearSearchBox}"
+                                        Style="{StaticResource TbClearStyle}"
+                                        CommandParameter="{Binding ElementName=PBuy}"
+                                        Grid.Column="1">
+                                        <Image Style="{StaticResource clearImg}"/>
+                                    </Button>
+                                </Grid>
+                            </ControlTemplate>
+                        </ContentControl.Template>
+                    </ContentControl>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Left">
+                    <Label Margin="10,0,0,0">Цена продажи:</Label>
+                    <ContentControl Focusable="False">
+                        <ContentControl.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <TextBox  Margin="10,0,0,0" Width="150" x:Name="PSellPrice" Grid.Column="0"  Text="{Binding PSellPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                                    <Button
+                                    Command="{Binding ClearSearchBox}"
+                                        Style="{StaticResource TbClearStyle}"
+                                        CommandParameter="{Binding ElementName=PSellPrice}"
+                                        Grid.Column="1">
+                                        <Image Style="{StaticResource clearImg}"/>
+                                    </Button>
+                                </Grid>
+                            </ControlTemplate>
+                        </ContentControl.Template>
+                    </ContentControl>
+                </StackPanel>
+            </StackPanel>-->
+            <StackPanel Margin="0,15,0,0" Orientation="Horizontal">
+                <Button  IsDefault="True" Command="{Binding SaveChanges}" CommandParameter="{Binding ElementName=EditWindow}" Margin="10,5,5,5">Сохранить</Button>
+                <Button  Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=EditWindow}" Margin="5">Отмена</Button>
+            </StackPanel>
+        </StackPanel>
+        </GroupBox>
+       
+</Window>

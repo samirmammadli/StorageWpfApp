@@ -1,0 +1,72 @@
+﻿<Window x:Class="StorageWpfApp.View.AppView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:local="clr-namespace:StorageWpfApp.View"
+        mc:Ignorable="d"
+        Title="Склад"
+        MinHeight="600"
+        MinWidth="1000"
+        x:Name="Window"
+        WindowState="Maximized"
+        >
+    <Window.Resources>
+        <ResourceDictionary Source="../Resources/DataTemplates.xaml">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Styles/StarterStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Ctrl"
+                    Key="N"
+                    Command="{Binding AddProduct}" CommandParameter="{Binding ElementName=Window}" />
+        <KeyBinding Modifiers="Ctrl"
+                    Key="G"
+                    Command="{Binding AddGroup}" />
+    </Window.InputBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" VerticalAlignment="Top">
+            <Menu Width="Auto">
+                <MenuItem Header="Файл" Height="25">
+                    <MenuItem InputGestureText="Alt+F4" Command="{Binding CloseAppConmmand}" x:Name="AppExit" Header="Выход" HorizontalAlignment="Left"/>
+                </MenuItem>
+                <MenuItem Header="Операции" Height="25">
+                    <MenuItem Command="{Binding ComposeInvoice}" CommandParameter="{Binding ElementName=Window}" x:Name="Invoices" Header="Оформить продажу" HorizontalAlignment="Left"/>
+                </MenuItem>
+                <MenuItem Header="Товары">
+                    <MenuItem  InputGestureText="Ctrl+N" x:Name="AddProduct" Header="Добавить товары" Command="{Binding AddProduct}" CommandParameter="{Binding ElementName=Window}" HorizontalAlignment="Left"/>
+                </MenuItem>
+                <MenuItem Header="Категории">
+                    <MenuItem  InputGestureText="Ctrl+G" x:Name="AddGroup" Header="Добавить категорию" Command="{Binding AddGroup}" HorizontalAlignment="Left"/>
+                    <MenuItem  x:Name="EditGroup" Header="Редактировать категории" Command="{Binding EditGroup}" CommandParameter="{Binding ElementName=Window}" HorizontalAlignment="Left"/>
+                </MenuItem>
+                <MenuItem Header="Клиенты">
+                    <MenuItem x:Name="AddClient" Header="Добавить клиента" Command="{Binding AddNewClient}" CommandParameter="{Binding ElementName=Window}" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="ClientsList" Header="Список клиентов" Command="{Binding ClientsList}" CommandParameter="{Binding ElementName=Window}" HorizontalAlignment="Left"/>
+                </MenuItem>
+                <MenuItem Header="Партии">
+                    <MenuItem x:Name="Consignments" Header="Список партий" Command="{Binding ConsignmentsList}" CommandParameter="{Binding ElementName=Window}" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="AddConsignment" Header="Новая партия" Command="{Binding AddConsignment}" CommandParameter="{Binding ElementName=Window}" HorizontalAlignment="Left"/>
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"/>
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock>Версия: </TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Text="{Binding AppVersion}"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

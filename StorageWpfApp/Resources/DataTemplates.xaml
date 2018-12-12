@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:StorageWpfApp.ViewModel"
+                    xmlns:v="clr-namespace:StorageWpfApp.View"
+                    >
+    <!--<ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Themes/Metro/Metro.MSControls.Core.Implicit.xaml" />
+        <ResourceDictionary Source="Themes/Metro/Metro.MSControls.Toolkit.Implicit.xaml" />
+    </ResourceDictionary.MergedDictionaries>-->
+    <DataTemplate DataType="{x:Type vm:MainViewModel}">
+        <v:MainView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:EditProductViewModel}">
+        <v:EditProduct/>
+    </DataTemplate>
+</ResourceDictionary>

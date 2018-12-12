@@ -1,0 +1,153 @@
+﻿<Window x:Class="StorageWpfApp.View.AddNewConsignmentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StorageWpfApp.View"
+        mc:Ignorable="d"
+        x:Name="AddConsignment"
+        Title="Редактор партий" Height="510" Width="600">
+    <Window.InputBindings>
+        <KeyBinding 
+                    Key="Esc"
+                    Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=AddConsignment}" />
+    </Window.InputBindings>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Styles/EditStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <GroupBox Margin="10" Header="Новая партия">
+        <StackPanel>
+            <GroupBox Header="Выбор товара" Style="{x:Null}">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="10">
+                        <Label >Код товара:</Label>
+                        <TextBox Text="{Binding SelectedProduct.Code}" Width="150" IsEnabled="False"></TextBox>
+                    </StackPanel>
+                    <Button IsEnabled="{Binding IsAddingProductEnabled}" VerticalAlignment="Bottom" Width="100" Margin="10" Command="{Binding SelectProduct}" CommandParameter="{Binding ElementName=AddConsignment}">Выбрать</Button>
+                    <Button VerticalAlignment="Bottom" Width="100" Margin="10" Command="{Binding AddProduct}" CommandParameter="{Binding ElementName=AddConsignment}">Новый</Button>
+                </StackPanel>
+            </GroupBox>
+
+            <StackPanel IsEnabled="{Binding IsEnable}">
+                <GroupBox Style="{x:Null}" Header="Партия">
+                    <StackPanel Margin="0,0,0,10">
+                        <StackPanel Margin="10">
+                            <Label>Дата закупки:</Label>
+                            <DatePicker SelectedDate="{Binding ConsDate}" Width="150" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                            <StackPanel Grid.Row="0" HorizontalAlignment="Left">
+                                <Label Margin="10,0,0,0">Количество:</Label>
+                                <ContentControl Focusable="False">
+                                    <ContentControl.Template>
+                                        <ControlTemplate>
+                                            <Grid>
+                                                <TextBox Margin="10,0,0,0" Width="150" x:Name="PCount" Grid.Column="0"  Text="{Binding PCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                                                <Button
+                                    Command="{Binding ClearSearchBox}"
+                                        Style="{StaticResource TbClearStyle}"
+                                        CommandParameter="{Binding ElementName=PCount}"
+                                        Grid.Column="1">
+                                                    <Image Style="{StaticResource clearImg}"/>
+                                                </Button>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </ContentControl.Template>
+                                </ContentControl>
+                            </StackPanel>
+
+                            <StackPanel  HorizontalAlignment="Left">
+                                <Label Margin="10,0,0,0">Цена закупки:</Label>
+                                <ContentControl Focusable="False" >
+                                    <ContentControl.Template>
+                                        <ControlTemplate>
+                                            <Grid>
+                                                <TextBox Margin="10,0,0,0" Width="150" x:Name="PBuy" Grid.Column="0"  Text="{Binding PBuyPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                                                <Button
+                                    Command="{Binding ClearSearchBox}"
+                                        Style="{StaticResource TbClearStyle}"
+                                        CommandParameter="{Binding ElementName=PBuy}"
+                                        Grid.Column="1">
+                                                    <Image Style="{StaticResource clearImg}"/>
+                                                </Button>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </ContentControl.Template>
+                                </ContentControl>
+                            </StackPanel>
+
+                            <StackPanel HorizontalAlignment="Left">
+                                <Label Margin="10,0,0,0">Цена продажи:</Label>
+                                <ContentControl Focusable="False">
+                                    <ContentControl.Template>
+                                        <ControlTemplate>
+                                            <Grid>
+                                                <TextBox  Margin="10,0,0,0" Width="150" x:Name="PSellPrice" Grid.Column="0"  Text="{Binding PSellPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                                                <Button
+                                    Command="{Binding ClearSearchBox}"
+                                        Style="{StaticResource TbClearStyle}"
+                                        CommandParameter="{Binding ElementName=PSellPrice}"
+                                        Grid.Column="1">
+                                                    <Image Style="{StaticResource clearImg}"/>
+                                                </Button>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </ContentControl.Template>
+                                </ContentControl>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- **************************************************************************************** !-->
+
+
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Padding="0,10,0,10" IsEnabled="{Binding SelectedProduct.IsPieceProduct}" Style="{x:Null}" Header="Штучная продажа">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+
+
+                            <StackPanel  HorizontalAlignment="Left">
+                                <Label Margin="10,0,0,0">Цена за штуку:</Label>
+                                <ContentControl Focusable="False" >
+                                    <ContentControl.Template>
+                                        <ControlTemplate>
+                                            <Grid>
+                                                <TextBox Margin="10,0,0,0" Width="150" x:Name="PPieceSellPrice" Grid.Column="0"  Text="{Binding PPieceSellPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                                                <Button
+                                    Command="{Binding ClearSearchBox}"
+                                        Style="{StaticResource TbClearStyle}"
+                                        CommandParameter="{Binding ElementName=PPieceSellPrice}"
+                                        Grid.Column="1">
+                                                    <Image Style="{StaticResource clearImg}"/>
+                                                </Button>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </ContentControl.Template>
+                                </ContentControl>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="0" HorizontalAlignment="Left">
+                                <Label Margin="10,0,0,0">Количество в упаковке:</Label>
+                                <TextBox IsEnabled="False" Margin="10,0,0,0" Width="150" x:Name="PPieceCount" Grid.Column="0"  Text="{Binding SelectedProduct.PieceQuantity, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                            </StackPanel>
+
+                            <StackPanel HorizontalAlignment="Left">
+                                <Label Margin="10,0,0,0">Всего штук:</Label>
+                                <TextBox IsEnabled="False" Margin="10,0,0,0" Width="150" x:Name="PSellPrice" Grid.Column="0"  Text="{Binding TotalPieceCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <StackPanel Margin="0,15,0,0" Orientation="Horizontal">
+                    <Button  IsDefault="True" Command="{Binding SaveChanges}" CommandParameter="{Binding ElementName=AddConsignment}" Margin="10,5,5,5">Сохранить</Button>
+                    <Button  Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=AddConsignment}" Margin="5">Отмена</Button>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </GroupBox>
+</Window>
