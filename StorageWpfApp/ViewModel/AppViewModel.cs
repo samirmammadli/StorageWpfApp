@@ -171,7 +171,8 @@ namespace StorageWpfApp.ViewModel
                 {
                     var compose = new ComposeInvoiceView
                     {
-                        Owner = wnd
+                        Owner = wnd,
+                        DataContext = new ComposeInvoiceViewModel(_db)
                     };
 
                     compose.ShowDialog();

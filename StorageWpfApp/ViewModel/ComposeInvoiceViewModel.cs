@@ -13,7 +13,13 @@ namespace StorageWpfApp.ViewModel
     {
         private ProjectContext _db;
 
-        public List<Product> Products { get; set; }
+        private Client _client;
+        public Client Client
+        {
+            get => _client;
+            set => Set(ref _client, value);
+        }
+
 
         private ObservableCollection<PieceOrder> _pieceOrders;
         public ObservableCollection<PieceOrder> PieceOrders
@@ -36,7 +42,8 @@ namespace StorageWpfApp.ViewModel
         {
             _db = db;
             Invoice = new Invoice();
-            Products = _db.Products.Local.ToList();
+            SingleOrders = new ObservableCollection<SingleOrder>();
+            PieceOrders = new ObservableCollection<PieceOrder>();
         }
     }
 }

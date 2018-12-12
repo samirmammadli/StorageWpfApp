@@ -43,8 +43,7 @@
                 <StackPanel Grid.ColumnSpan="2">
                     <Label>Товар:</Label>
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox IsEditable="True" Width="100"></ComboBox>
-                        <Button HorizontalAlignment="Right" Width="100" Margin="20,0,0,0">Найти..</Button>
+                        <Button HorizontalAlignment="Right" Width="100">Добавить..</Button>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0">
@@ -141,8 +140,6 @@
                   Height="Auto"
                   MinHeight="200"
                   HorizontalAlignment="Stretch"
-                  SelectedItem="{Binding SelectedProduct}"
-                  ItemsSource="{Binding Products}"
                   AutoGenerateColumns="False"
                   HorizontalContentAlignment="Center"
                   EnableRowVirtualization="True"                      
@@ -177,7 +174,7 @@
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding Name}" Header="Количество" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding Name}" Header="Цена за еденицу" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding Name}" Header="Скидка" MinWidth="100" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Name}" Header="Сумма" MinWidth="150" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Name}" Header="Сумма" MinWidth="150" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
@@ -186,8 +183,6 @@
                   Height="Auto"
                   MinHeight="200"
                   HorizontalAlignment="Stretch"
-                  SelectedItem="{Binding SelectedProduct}"
-                  ItemsSource="{Binding Products}"
                   AutoGenerateColumns="False"
                   HorizontalContentAlignment="Center"
                   EnableRowVirtualization="True"                      
@@ -222,7 +217,7 @@
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding Name}" Header="Количество" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding Name}" Header="Цена за еденицу" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding Name}" Header="Скидка" MinWidth="100" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Name}" Header="Сумма" MinWidth="150" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Name}" Header="Сумма" MinWidth="150" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
