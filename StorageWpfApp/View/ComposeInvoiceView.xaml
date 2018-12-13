@@ -54,17 +54,6 @@
                         <Button Command="{Binding AddPieceCons}" CommandParameter="{Binding ElementName=ComposeInvoice}" HorizontalAlignment="Right" Width="100">Добавить..</Button>
                     </StackPanel>
                 </StackPanel>
-                <!--<StackPanel VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0">
-                    <Label>Количество:</Label>
-                    <TextBox Width="100" HorizontalAlignment="Left"/>
-                </StackPanel>
-                <StackPanel VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1">
-                    <Label>Скидка за еденицу:</Label>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox Width="100" />
-                        <Label>AZN</Label>
-                    </StackPanel>
-                </StackPanel>-->
             </Grid>
         </GroupBox>
         <GroupBox Margin="0,5,0,5" Grid.Column="1" Style="{x:Null}" Header="Операции с клиентом">
@@ -76,15 +65,15 @@
                 </Grid.RowDefinitions>
                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
                     <Label>Клиент:</Label>
-                    <TextBox IsReadOnly="True" HorizontalAlignment="Stretch"/>
+                    <TextBox Text="{Binding ClientsFullName}" IsReadOnly="True" HorizontalAlignment="Stretch"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" VerticalAlignment="Top" Orientation="Horizontal">
                     <Button Width="100" Margin="0,10,0,10">Выбрать</Button>
-                    <Button Width="100" Margin="10">Очистить</Button>
+                    <Button Name="ClearClientBtn" Command="{Binding ClearClient}" Width="100" Margin="10">Очистить</Button>
                 </StackPanel>
                 <StackPanel  VerticalAlignment="Bottom" Grid.Row="2" Orientation="Horizontal" >
                     <Label>Сумма в долг:</Label>
-                    <TextBox Text="{Binding DebtAmount, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="114" />
+                    <TextBox IsEnabled="{Binding ElementName=ClearClientBtn, Path=IsEnabled}" Text="{Binding DebtAmount, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="114" />
                     <Label>AZN</Label>
                 </StackPanel>
             </Grid>
@@ -106,7 +95,7 @@
                     <Label>Дата накладной:</Label>
                     <DatePicker Width="100" HorizontalAlignment="Left" SelectedDate="{Binding InvoiceDate}"/>
                 </StackPanel>
-                <StackPanel Grid.Row="1" Grid.Column="1">
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
                     <Label>Сумма без скидок:</Label>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Text="{Binding TotalPriceWithoutDiscount}" IsReadOnly="True" Width="100" />

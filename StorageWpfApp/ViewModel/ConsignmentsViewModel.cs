@@ -132,6 +132,24 @@ namespace StorageWpfApp.ViewModel
             ));
         }
 
+        //EditOrSelect
+        private RelayCommand<Window> _editOrSelect;
+        public RelayCommand<Window> EditOrSelect
+        {
+            get => _editOrSelect ?? (_editOrSelect = new RelayCommand<Window>(
+                wnd =>
+                {
+                    if (SelectionVisibility == Visibility.Visible)
+                    {
+                        wnd.DialogResult = true;
+                        wnd.Close();
+                    }
+                },
+                wnd => SelectedConsignment != null
+            ));
+        }
+
+
 
         private RelayCommand<Window> _selectConsignment;
         public RelayCommand<Window> SelectConsignment

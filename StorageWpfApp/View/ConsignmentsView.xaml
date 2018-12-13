@@ -128,7 +128,7 @@
                   AlternationCount="2">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
-                        <i:InvokeCommandAction Command="{Binding EditProduct}" CommandParameter="{Binding ElementName=MainWnd}"/>
+                        <i:InvokeCommandAction Command="{Binding EditOrSelect}" CommandParameter="{Binding ElementName=Consignments}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <DataGrid.CellStyle>

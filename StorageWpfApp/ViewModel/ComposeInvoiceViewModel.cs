@@ -19,13 +19,7 @@ namespace StorageWpfApp.ViewModel
     {
         private ProjectContext _db;
 
-        private Client _client;
-        public Client Client
-        {
-            get => _client;
-            set => Set(ref _client, value);
-        }
-
+        
         private ObservableCollection<PieceOrder> _pieceOrders;
         public ObservableCollection<PieceOrder> PieceOrders
         {
@@ -48,6 +42,25 @@ namespace StorageWpfApp.ViewModel
             get => _invoiceDate;
             set => Set(ref _invoiceDate, value);
         }
+
+        private Client _client;
+        public Client Client
+        {
+            get => _client;
+            set
+            {
+                Set(ref _client, value);
+                ClientsFullName = $"{_client?.Name} {_client?.Surname}";
+            }
+        }
+
+        private string _clientsFullName;
+        public string ClientsFullName
+        {
+            get { return _clientsFullName; }
+            set => Set(ref _clientsFullName, value);
+        }
+
 
         private double totalSumWithDiscountTemp;
 
@@ -164,6 +177,20 @@ namespace StorageWpfApp.ViewModel
 
             ));
         }
+
+        private RelayCommand _clearClient;
+        public RelayCommand ClearClient
+        {
+            get => _clearClient ?? (_clearClient = new RelayCommand(
+                () =>
+                {
+                    Client = null;
+                    DebtAmount = "";
+                },
+                () => Client != null
+            ));
+        }
+
 
         private RelayCommand<PieceOrder> _removeFromPiece;
         public RelayCommand<PieceOrder> RemoveFromPiece
