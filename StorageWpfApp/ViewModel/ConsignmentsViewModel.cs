@@ -57,6 +57,7 @@ namespace StorageWpfApp.ViewModel
             Groups = _db.Groups.Local.ToObservableCollection();
             Consignments = new ListCollectionView(_db.Consignments.Local.ToObservableCollection());
             Consignments.CustomSort = new ConsignmentDateSorting();
+            Consignments.MoveCurrentToFirst();
             ProductsPricingCalculating();
         }
 
@@ -68,8 +69,9 @@ namespace StorageWpfApp.ViewModel
             Groups = _db.Groups.Local.ToObservableCollection();
             Consignments = new ListCollectionView(_db.Consignments.Local.ToObservableCollection());
             Consignments.CustomSort = new ConsignmentDateSorting();
-            ProductsPricingCalculating();
+            Consignments.MoveCurrentToFirst();
             SearchBy();
+            
         }
 
         public ConsignmentsViewModel(ProjectContext db, Product prd)
@@ -80,6 +82,7 @@ namespace StorageWpfApp.ViewModel
             SelectedGroup = new ProductGroup { Id = -1 };
             Consignments = new ListCollectionView(_db.Consignments.Local.ToObservableCollection());
             Consignments.CustomSort = new ConsignmentDateSorting();
+            Consignments.MoveCurrentToFirst();
             SearchBy();
         }
 
@@ -136,7 +139,8 @@ namespace StorageWpfApp.ViewModel
             get => _selectConsignment ?? (_selectConsignment = new RelayCommand<Window>(
                 wnd =>
                 {
-                    wnd.DialogResult = true;
+                    if (SelectedConsignment != null)
+                        wnd.DialogResult = true;
                     wnd.Close();
                 },
                 wnd => SelectedConsignment != null
@@ -175,7 +179,6 @@ namespace StorageWpfApp.ViewModel
 
         private void SearchBy()
         {
-
             Consignments.Filter = c =>
             {
                 var cons = c as Consignment;

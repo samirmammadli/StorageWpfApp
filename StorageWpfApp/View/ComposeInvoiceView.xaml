@@ -116,7 +116,7 @@
                 <StackPanel Grid.Row="2" Grid.Column="0" Margin="5,0,0,0">
                     <Label>Сумма с учетом скидок:</Label>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Width="100" />
+                        <TextBox Text="{Binding TotalPriceWithDiscount}" IsReadOnly="True" Width="100" />
                         <Label>AZN</Label>
                     </StackPanel>
                 </StackPanel>
@@ -171,18 +171,19 @@
                     </Style>
                 </DataGrid.CellStyle>
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn>
+                    <DataGridTemplateColumn MinWidth="45" MaxWidth="45">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button VerticalContentAlignment="Center" Padding="0" Width="20" Height="20" Background="#db1c1c">X</Button>
+                                <Button Command="{Binding Path=DataContext.RemoveFromSingle,RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding }" MinWidth="20" VerticalContentAlignment="Center" Padding="0" Width="20" Height="20" Background="#db1c1c">X</Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Product.Code}"  Header="Код товара" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Product.Name}" Header="Наименование" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.SellingPrice}" Header="Цена за еденицу" MinWidth="150" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Quantity}" Header="Доступное кол-во" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding Count}" Header="Количество" MinWidth="150" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Discount}" Header="Скидка" MinWidth="100" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Discount}" Header="Скидка на ед." MinWidth="100" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Sum}" Header="Сумма" MinWidth="150" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
@@ -215,18 +216,19 @@
                     </Style>
                 </DataGrid.CellStyle>
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn>
+                    <DataGridTemplateColumn MinWidth="45" MaxWidth="45">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button VerticalContentAlignment="Center" Padding="0" Width="20" Height="20" Background="#db1c1c">X</Button>
+                                <Button Command="{Binding Path=DataContext.RemoveFromPiece,RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding }" MinWidth="20" VerticalContentAlignment="Center" Padding="0" Width="20" Height="20" Background="#db1c1c">X</Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Product.Code}"  Header="Код товара" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Product.Name}" Header="Наименование" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.PiecePrice}" Header="Цена за еденицу" MinWidth="150" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.CurrentPieceQuantity}" Header="Доступное кол-во" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding Count}" Header="Количество" MinWidth="150" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Discount}" Header="Скидка" MinWidth="100" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Discount}" Header="Скидка на ед." MinWidth="100" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Sum}" Header="Сумма" MinWidth="150" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>

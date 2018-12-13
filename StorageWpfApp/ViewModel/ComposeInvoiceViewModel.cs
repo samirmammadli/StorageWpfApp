@@ -6,6 +6,8 @@ using StorageWpfApp.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,11 +34,11 @@ namespace StorageWpfApp.ViewModel
             set => Set(ref _pieceOrders, value);
         }
 
-        private ObservableCollection<SingleOrder> singleOrders;
+        private ObservableCollection<SingleOrder> _singleOrders;
         public ObservableCollection<SingleOrder> SingleOrders
         {
-            get => singleOrders;
-            set => Set(ref singleOrders, value);
+            get => _singleOrders;
+            set => Set(ref _singleOrders, value);
         }
 
         public Invoice Invoice { get; set; }
@@ -48,18 +50,13 @@ namespace StorageWpfApp.ViewModel
             set => Set(ref _invoiceDate, value);
         }
 
-        private string _count = "";
-        public string Count
+        private double _totalPriceWithDiscount;
+        public double TotalPriceWithDiscount
         {
-            get => _count;
-            set
-            {
-                if (value.IsCorrectInt())
-                {
-                    Set(ref _count, value);
-                }
-            }
+            get => _totalPriceWithDiscount;
+            set => Set(ref _totalPriceWithDiscount, value);
         }
+
 
         private RelayCommand<Window> _addSingleCons;
         public RelayCommand<Window> AddSingleCons
@@ -75,7 +72,10 @@ namespace StorageWpfApp.ViewModel
                     };
                     var result = view.ShowDialog();
                     if (result.HasValue && result.Value)
-                        AddSingleOrder(context.SelectedConsignment);
+                        if (SingleOrders.FirstOrDefault(x => x.Consignment == context.SelectedConsignment) == null)
+                            AddSingleOrder(context.SelectedConsignment);
+                        else
+                            MessageBox.Show("Товар уже добавлен в список!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
 
             ));
@@ -95,7 +95,36 @@ namespace StorageWpfApp.ViewModel
                     };
                     var result = view.ShowDialog();
                     if (result.HasValue && result.Value)
-                        AddPieceOrder(context.SelectedConsignment);
+                        if (PieceOrders.FirstOrDefault(x => x.Consignment == context.SelectedConsignment) == null)
+                            AddPieceOrder(context.SelectedConsignment);
+                        else
+                            MessageBox.Show("Товар уже добавлен в список!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+
+            ));
+        }
+
+        private RelayCommand<SingleOrder> _removeFromSingle;
+        public RelayCommand<SingleOrder>  RemoveFromSingle
+        {
+            get => _removeFromSingle ?? (_removeFromSingle = new RelayCommand<SingleOrder>(
+                order =>
+                {
+                    if (order != null)
+                        SingleOrders.Remove(order);
+                }
+
+            ));
+        }
+
+        private RelayCommand<PieceOrder> _removeFromPiece;
+        public RelayCommand<PieceOrder> RemoveFromPiece
+        {
+            get => _removeFromPiece ?? (_removeFromPiece = new RelayCommand<PieceOrder>(
+                order =>
+                {
+                    if (order != null)
+                        PieceOrders.Remove(order);
                 }
 
             ));
@@ -123,6 +152,70 @@ namespace StorageWpfApp.ViewModel
             });
         }
 
+        private void SubscribeToSumPropertyChangedSingle(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            CalculateTotalSum();
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                var newItems = e.NewItems.Cast<SingleOrder>();
+                if (newItems != null)
+                {
+                    foreach (var item in newItems)
+                    {
+                        item.PropertyChanged += CalculateTotalSumEventHandler;
+                    }
+                }
+            }
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                var deletedItems = e.OldItems.Cast<SingleOrder>();
+                if (deletedItems != null)
+                {
+                    foreach (var item in deletedItems)
+                    {
+                        item.PropertyChanged -= CalculateTotalSumEventHandler;
+                    }
+                }
+            }
+        }
+
+        private void SubscribeToSumPropertyChangedPiece(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            CalculateTotalSum();
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                var newItems = e.NewItems.Cast<PieceOrder>();
+                if (newItems != null)
+                {
+                    foreach (var item in newItems)
+                    {
+                        item.PropertyChanged += CalculateTotalSumEventHandler;
+                    }
+                }
+            }
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                var deletedItems = e.OldItems.Cast<PieceOrder>();
+                if (deletedItems != null)
+                {
+                    foreach (var item in deletedItems)
+                    {
+                        item.PropertyChanged -= CalculateTotalSumEventHandler;
+                    }
+                }
+            }
+        }
+
+        private void CalculateTotalSumEventHandler(object sender, PropertyChangedEventArgs e)
+        {
+            CalculateTotalSum();
+        }
+
+        private void CalculateTotalSum()
+        {
+            TotalPriceWithDiscount = SingleOrders.Sum(x => x.Sum) + PieceOrders.Sum(x => x.Sum);
+        }
+
         public ComposeInvoiceViewModel(ProjectContext db)
         {
             InvoiceDate = DateTime.Now;
@@ -131,7 +224,8 @@ namespace StorageWpfApp.ViewModel
             SingleOrders = new ObservableCollection<SingleOrder>();
             PieceOrders = new ObservableCollection<PieceOrder>();
 
-            SingleOrders.Add(new SingleOrder { Consignment = _db.Consignments.FirstOrDefault(), Count = 10, Discount = 0 });
+            SingleOrders.CollectionChanged += SubscribeToSumPropertyChangedSingle;
+            PieceOrders.CollectionChanged += SubscribeToSumPropertyChangedPiece;
         }
     }
 }
