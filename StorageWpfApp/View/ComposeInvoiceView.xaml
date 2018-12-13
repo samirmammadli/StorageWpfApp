@@ -84,7 +84,7 @@
                 </StackPanel>
                 <StackPanel  VerticalAlignment="Bottom" Grid.Row="2" Orientation="Horizontal" >
                     <Label>Сумма в долг:</Label>
-                    <TextBox VerticalAlignment="Top" Width="114" />
+                    <TextBox Text="{Binding DebtAmount, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="114" />
                     <Label>AZN</Label>
                 </StackPanel>
             </Grid>
@@ -109,7 +109,7 @@
                 <StackPanel Grid.Row="1" Grid.Column="1">
                     <Label>Сумма без скидок:</Label>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Width="100" />
+                        <TextBox Text="{Binding TotalPriceWithoutDiscount}" IsReadOnly="True" Width="100" />
                         <Label>AZN</Label>
                     </StackPanel>
                 </StackPanel>
@@ -123,7 +123,7 @@
                 <StackPanel Grid.Row="0" Grid.Column="1" Margin="5,0,0,0">
                     <Label>В долг:</Label>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Width="100" />
+                        <TextBox Text="{Binding DebtAmount}" IsReadOnly="True" Width="100" />
                         <Label>AZN</Label>
                     </StackPanel>
                 </StackPanel>
@@ -137,7 +137,7 @@
                 <StackPanel Grid.Row="2" Grid.Column="1" Margin="5,0,0,0">
                     <Label FontWeight="Bold">К оплате:</Label>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox FontWeight="Bold" Width="100" />
+                        <TextBox Text="{Binding TotalSumToPay}" IsReadOnly="True" FontWeight="Bold" Width="100" />
                         <Label FontWeight="Bold">AZN</Label>
                     </StackPanel>
                 </StackPanel>

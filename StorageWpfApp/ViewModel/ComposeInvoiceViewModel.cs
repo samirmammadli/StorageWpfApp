@@ -26,7 +26,6 @@ namespace StorageWpfApp.ViewModel
             set => Set(ref _client, value);
         }
 
-
         private ObservableCollection<PieceOrder> _pieceOrders;
         public ObservableCollection<PieceOrder> PieceOrders
         {
@@ -50,11 +49,27 @@ namespace StorageWpfApp.ViewModel
             set => Set(ref _invoiceDate, value);
         }
 
+        private double totalSumWithDiscountTemp;
+
         private double _totalPriceWithDiscount;
         public double TotalPriceWithDiscount
         {
             get => _totalPriceWithDiscount;
             set => Set(ref _totalPriceWithDiscount, value);
+        }
+
+        private double _totalPriceWithoutDiscount;
+        public double TotalPriceWithoutDiscount
+        {
+            get => _totalPriceWithoutDiscount;
+            set => Set(ref _totalPriceWithoutDiscount, value);
+        }
+
+        private double _totalSumToPay;
+        public double TotalSumToPay
+        {
+            get => _totalSumToPay;
+            set => Set(ref _totalSumToPay, value);
         }
 
         private string _additionalTotalDiscount;
@@ -63,14 +78,32 @@ namespace StorageWpfApp.ViewModel
             get => _additionalTotalDiscount;
             set
             {
-                if (value.IsDouble() && value.StringToDouble() < TotalPriceWithDiscount)
+                if (value.IsDouble() && value.StringToDouble() < totalSumWithDiscountTemp)
                 {
 
                     Set(ref _additionalTotalDiscount, value);
+
                     CalculateTotalSum();
                 }
             }
         }
+
+        private string _debtAmount;
+        public string DebtAmount
+        {
+            get => _debtAmount;
+            set
+            {
+                if (value.IsDouble() && value.StringToDouble() <= TotalPriceWithDiscount)
+                {
+
+                    Set(ref _debtAmount, value);
+
+                    CalculateTotalSum();
+                }
+            }
+        }
+
 
 
         private RelayCommand<Window> _addSingleCons;
@@ -174,6 +207,7 @@ namespace StorageWpfApp.ViewModel
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 var newItems = e.NewItems.Cast<SingleOrder>();
+
                 if (newItems != null)
                 {
                     foreach (var item in newItems)
@@ -185,6 +219,7 @@ namespace StorageWpfApp.ViewModel
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
                 var deletedItems = e.OldItems.Cast<SingleOrder>();
+
                 if (deletedItems != null)
                 {
                     foreach (var item in deletedItems)
@@ -202,6 +237,7 @@ namespace StorageWpfApp.ViewModel
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 var newItems = e.NewItems.Cast<PieceOrder>();
+
                 if (newItems != null)
                 {
                     foreach (var item in newItems)
@@ -213,6 +249,7 @@ namespace StorageWpfApp.ViewModel
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
                 var deletedItems = e.OldItems.Cast<PieceOrder>();
+
                 if (deletedItems != null)
                 {
                     foreach (var item in deletedItems)
@@ -230,18 +267,29 @@ namespace StorageWpfApp.ViewModel
 
         private void CalculateTotalSum()
         {
-            TotalPriceWithDiscount = SingleOrders.Sum(x => x.Sum) + PieceOrders.Sum(x => x.Sum) - AdditionalTotalDiscount.StringToDouble();
+            totalSumWithDiscountTemp = SingleOrders.Sum(x => x.Sum) + PieceOrders.Sum(x => x.Sum);
+
+            TotalPriceWithDiscount = totalSumWithDiscountTemp - AdditionalTotalDiscount.StringToDouble();
+
+            TotalPriceWithoutDiscount = TotalPriceWithDiscount + SingleOrders.Sum(x => x.Discount * x.Count) + PieceOrders.Sum(x=> x.Discount * x.Count) + AdditionalTotalDiscount.StringToDouble();
+
+            TotalSumToPay = TotalPriceWithDiscount - DebtAmount.StringToDouble();
         }
 
         public ComposeInvoiceViewModel(ProjectContext db)
         {
             InvoiceDate = DateTime.Now;
+
             _db = db;
+
             Invoice = new Invoice();
+
             SingleOrders = new ObservableCollection<SingleOrder>();
+
             PieceOrders = new ObservableCollection<PieceOrder>();
 
             SingleOrders.CollectionChanged += SubscribeToSumPropertyChangedSingle;
+
             PieceOrders.CollectionChanged += SubscribeToSumPropertyChangedPiece;
         }
     }
