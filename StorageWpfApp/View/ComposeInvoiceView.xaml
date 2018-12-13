@@ -130,7 +130,7 @@
                 <StackPanel Grid.Row="1" Grid.Column="0" Margin="5,0,0,0">
                     <Label>Дополнительная скидка:</Label>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Width="100" />
+                        <TextBox Text="{Binding AdditionalTotalDiscount, UpdateSourceTrigger=PropertyChanged}" Width="100" />
                         <Label>AZN</Label>
                     </StackPanel>
                 </StackPanel>

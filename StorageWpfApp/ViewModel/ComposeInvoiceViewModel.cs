@@ -57,6 +57,21 @@ namespace StorageWpfApp.ViewModel
             set => Set(ref _totalPriceWithDiscount, value);
         }
 
+        private string _additionalTotalDiscount;
+        public string AdditionalTotalDiscount
+        {
+            get => _additionalTotalDiscount;
+            set
+            {
+                if (value.IsDouble() && value.StringToDouble() < TotalPriceWithDiscount)
+                {
+
+                    Set(ref _additionalTotalDiscount, value);
+                    CalculateTotalSum();
+                }
+            }
+        }
+
 
         private RelayCommand<Window> _addSingleCons;
         public RelayCommand<Window> AddSingleCons
@@ -155,6 +170,7 @@ namespace StorageWpfApp.ViewModel
         private void SubscribeToSumPropertyChangedSingle(object sender, NotifyCollectionChangedEventArgs e)
         {
             CalculateTotalSum();
+
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 var newItems = e.NewItems.Cast<SingleOrder>();
@@ -182,6 +198,7 @@ namespace StorageWpfApp.ViewModel
         private void SubscribeToSumPropertyChangedPiece(object sender, NotifyCollectionChangedEventArgs e)
         {
             CalculateTotalSum();
+
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 var newItems = e.NewItems.Cast<PieceOrder>();
@@ -213,7 +230,7 @@ namespace StorageWpfApp.ViewModel
 
         private void CalculateTotalSum()
         {
-            TotalPriceWithDiscount = SingleOrders.Sum(x => x.Sum) + PieceOrders.Sum(x => x.Sum);
+            TotalPriceWithDiscount = SingleOrders.Sum(x => x.Sum) + PieceOrders.Sum(x => x.Sum) - AdditionalTotalDiscount.StringToDouble();
         }
 
         public ComposeInvoiceViewModel(ProjectContext db)
