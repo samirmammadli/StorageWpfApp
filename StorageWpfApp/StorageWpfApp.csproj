@@ -204,9 +204,9 @@
     <Compile Include="Messages\UpdateClientsMsg.cs" />
     <Compile Include="Messages\UpdateGroupsMsg.cs" />
     <Compile Include="ExtensionMethods\RepoExtentions\ProductRepo.cs" />
-    <Compile Include="Migrations\20181211123105_Initial.cs" />
-    <Compile Include="Migrations\20181211123105_Initial.designer.cs">
-      <DependentUpon>20181211123105_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\20181214122119_Initial.cs" />
+    <Compile Include="Migrations\20181214122119_Initial.designer.cs">
+      <DependentUpon>20181214122119_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ProjectContextModelSnapshot.cs" />
     <Compile Include="ViewModelLocator.cs" />

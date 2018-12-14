@@ -116,13 +116,11 @@ namespace StorageWpfApp.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<int?>("DebtId");
-
                     b.Property<double>("TotalAmount");
 
-                    b.Property<double>("TotalCash");
-
                     b.Property<double>("TotalDiscount");
+
+                    b.Property<double>("TotalPayed");
 
                     b.HasKey("Id");
 

@@ -210,9 +210,9 @@ namespace StorageWpfApp.ViewModel
                {
                    try
                    {
-                       if (SelectedClient.Debit > 0)
+                       if (_db.Invoices.Local.Any(x => x.Client == SelectedClient))
                        {
-                           MessageBox.Show("У клиента имеется долг!", "Невозможно удалить!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                           MessageBox.Show("На имя данного клиента имеются оформленные продажи!", "Невозможно удалить!", MessageBoxButton.OK, MessageBoxImage.Warning);
                            return;
                        }
                        _db.Clients.Remove(SelectedClient);

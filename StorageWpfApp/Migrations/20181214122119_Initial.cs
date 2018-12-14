@@ -96,8 +96,7 @@ namespace StorageWpfApp.Migrations
                     Date = table.Column<DateTime>(nullable: false),
                     TotalDiscount = table.Column<double>(nullable: false),
                     TotalAmount = table.Column<double>(nullable: false),
-                    TotalCash = table.Column<double>(nullable: false),
-                    DebtId = table.Column<int>(nullable: true),
+                    TotalPayed = table.Column<double>(nullable: false),
                     ConsignmentId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

@@ -48,7 +48,10 @@
                         <Button Command="{Binding AddSingleCons}" CommandParameter="{Binding ElementName=ComposeInvoice}" HorizontalAlignment="Right" Width="100">Добавить..</Button>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Grid.Column="1">
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <Button Command="{Binding SaveInvoiceCommand}" CommandParameter="{Binding ElementName=ComposeInvoice}" HorizontalAlignment="Right" Width="100">Сохранить</Button>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
                     <Label>Штучный товар:</Label>
                     <StackPanel Orientation="Horizontal">
                         <Button Command="{Binding AddPieceCons}" CommandParameter="{Binding ElementName=ComposeInvoice}" HorizontalAlignment="Right" Width="100">Добавить..</Button>

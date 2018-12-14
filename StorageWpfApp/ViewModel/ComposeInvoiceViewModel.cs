@@ -183,6 +183,78 @@ namespace StorageWpfApp.ViewModel
             ));
         }
 
+        private bool AddInvoiceToDatabase()
+        {
+            using (var transaction = _db.Database.BeginTransaction())
+            {
+                try
+                {
+                    Invoice.Date = InvoiceDate;
+                    Invoice.TotalPayed = TotalSumToPay;
+                    Invoice.TotalDiscount = TotalPriceWithoutDiscount - TotalPriceWithDiscount;
+                    Invoice.TotalAmount = TotalPriceWithoutDiscount;
+
+                    _db.Invoices.Add(Invoice);
+                    _db.SaveChanges();
+
+                    if (Client != null)
+                    {
+                        Invoice.Client = Client;
+                        if (DebtAmount.StringToDouble() > 0 )
+                        {
+                            var clientDebt = new Debt
+                            {
+                                Client = Client,
+                                Invoice = Invoice,
+                                Amount = DebtAmount.StringToDouble(),
+                            };
+
+                            _db.Debts.Add(clientDebt);
+                            _db.SaveChanges();
+
+                            Invoice.Debt = clientDebt;
+                        }
+                        _db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+
+                transaction.Commit();
+            }
+
+            return true;
+        }
+
+        private bool CheckAll()
+        {
+            return InvoiceDate != null && (SingleOrders.Any() || PieceOrders.Any());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private RelayCommand<Window> _saveInvoiceCommand;
+        public RelayCommand<Window> SaveInvoiceCommand
+        {
+            get => _saveInvoiceCommand ?? (_saveInvoiceCommand = new RelayCommand<Window>(
+                wnd =>
+                {
+                    if (AddInvoiceToDatabase())
+                    {
+                        MessageBox.Show($"Номер накладной: {Invoice.Id}.", "Накладная создана!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        wnd.Close();
+                    }
+                    else
+                        MessageBox.Show("Что то пошло не так!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                },
+                wnd => CheckAll()
+            ));
+        }
+
         private RelayCommand<SingleOrder> _removeFromSingle;
         public RelayCommand<SingleOrder>  RemoveFromSingle
         {
@@ -333,8 +405,6 @@ namespace StorageWpfApp.ViewModel
             }
 
             TotalSumToPay = TotalPriceWithDiscount - DebtAmount.StringToDouble();
-
-            
         }
 
         public ComposeInvoiceViewModel(ProjectContext db)

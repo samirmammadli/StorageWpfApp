@@ -20,9 +20,7 @@ namespace StorageWpfApp.Entities
          
         public double TotalAmount { get; set; }
 
-        public double TotalCash { get; set; }
-
-        public int? DebtId { get; set; }
+        public double TotalPayed { get; set; }
 
         public Debt Debt { get; set; }
 

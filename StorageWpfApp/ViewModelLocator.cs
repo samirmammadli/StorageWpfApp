@@ -23,6 +23,8 @@ namespace StorageWpfApp
         public ViewModelLocator()
         {
             _db = new ProjectContext();
+            //Todo Remove after release
+            FillDbWithFakeData();
             LoadAllTables();
             appViewModel = new AppViewModel(_db);
             mainViewModel = new MainViewModel(navigationService, _db);
@@ -45,6 +47,53 @@ namespace StorageWpfApp
             _db.Debts.Load();
             _db.Invoices.Load();
             _db.DebtPayments.Load();
+        }
+
+        private void FillDbWithFakeData()
+        {
+            if (!_db.Groups.Any())
+            {
+                _db.Groups.AddRange(
+                        new ProductGroup { Name = "Гвозди" },
+                        new ProductGroup { Name = "Краны" },
+                        new ProductGroup { Name = "Споты" }
+                        );
+
+
+                var rnd = new Random();
+                for (int i = 0; i < 10000; i++)
+                {
+                    var IsPiece = rnd.Next(2) == 0 ? false : true;
+                    var prd = new Product { Code = Guid.NewGuid().ToString().Substring(0, 10), IsPieceProduct = IsPiece, Name = Guid.NewGuid().ToString().Substring(0, 8), GroupId = rnd.Next(1, 4) };
+                    if (IsPiece)
+                    {
+                        prd.PieceQuantity = rnd.Next(10, 150);
+                    }
+                    _db.Products.Add(prd);
+                }
+
+                _db.SaveChanges();
+
+                for (int i = 0; i < 10000; i++)
+                {
+                    var index = rnd.Next(1, 150);
+                    var prd = _db.Products.FirstOrDefault(p => p.Id == index);
+                    var cons = new Consignment { Date = new DateTime(rnd.Next(2015, 2019), rnd.Next(1, 13), rnd.Next(1, 28)), IsPieceAllowed = prd.IsPieceProduct, ProductId = index, PurchasePrice = rnd.Next(10, 150), Quantity = i, SellingPrice = rnd.Next(10, 150) };
+                    if (prd.IsPieceProduct)
+                    {
+                        cons.CurrentPieceQuantity = prd.PieceQuantity.Value * i;
+                        cons.PiecePrice = rnd.Next(10, 150);
+                    }
+                    _db.Consignments.Add(cons);
+                }
+
+                _db.Clients.AddRange(
+                    new Client { Name = "Ujal", Surname = "Zeynalov", Email = "zeynalov.u@gmail.com", PhoneNumber = "+994505052813" },
+                    new Client { Name = "Zahid", Surname = "Abbasli", Email = "abbasli.zahid@gmail.com", PhoneNumber = "+994558542512" },
+                    new Client { Name = "Samir", Surname = "Mammadli", Email = "mammadli.s.r@gmail.com", PhoneNumber = "+994557099110" });
+
+                _db.SaveChanges();
+            }
         }
 
         public static ViewModelBase GetCurrent()

@@ -9,7 +9,7 @@ using StorageWpfApp.Entities;
 namespace StorageWpfApp.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    [Migration("20181211123105_Initial")]
+    [Migration("20181214122119_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -118,13 +118,11 @@ namespace StorageWpfApp.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<int?>("DebtId");
-
                     b.Property<double>("TotalAmount");
 
-                    b.Property<double>("TotalCash");
-
                     b.Property<double>("TotalDiscount");
+
+                    b.Property<double>("TotalPayed");
 
                     b.HasKey("Id");
 
