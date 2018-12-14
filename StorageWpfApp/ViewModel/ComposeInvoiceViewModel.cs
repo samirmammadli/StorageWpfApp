@@ -163,6 +163,26 @@ namespace StorageWpfApp.ViewModel
             ));
         }
 
+        private RelayCommand<Window> _addClient;
+        public RelayCommand<Window> AddClient
+        {
+            get => _addClient ?? (_addClient = new RelayCommand<Window>(
+                wnd =>
+                {
+                    var context = new SelectClientViewModel(_db, true);
+                    var view = new SelectClientView
+                    {
+                        Owner = wnd,
+                        DataContext = context
+                    };
+                    var result = view.ShowDialog();
+                    if (result.HasValue && result.Value)
+                        Client = context.SelectedClient;
+                }
+
+            ));
+        }
+
         private RelayCommand<SingleOrder> _removeFromSingle;
         public RelayCommand<SingleOrder>  RemoveFromSingle
         {
@@ -305,6 +325,12 @@ namespace StorageWpfApp.ViewModel
             TotalPriceWithDiscount = totalSumWithDiscountTemp - AdditionalTotalDiscount.StringToDouble();
 
             TotalPriceWithoutDiscount = TotalPriceWithDiscount + SingleOrders.Sum(x => x.Discount * x.Count) + PieceOrders.Sum(x=> x.Discount * x.Count) + AdditionalTotalDiscount.StringToDouble();
+
+            if (DebtAmount.StringToDouble() > TotalPriceWithDiscount)
+            {
+                _debtAmount = TotalPriceWithDiscount.ToString();
+                RaisePropertyChanged(nameof(DebtAmount));
+            }
 
             TotalSumToPay = TotalPriceWithDiscount - DebtAmount.StringToDouble();
 

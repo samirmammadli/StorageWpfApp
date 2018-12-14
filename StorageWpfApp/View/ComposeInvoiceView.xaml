@@ -68,7 +68,7 @@
                     <TextBox Text="{Binding ClientsFullName}" IsReadOnly="True" HorizontalAlignment="Stretch"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" VerticalAlignment="Top" Orientation="Horizontal">
-                    <Button Width="100" Margin="0,10,0,10">Выбрать</Button>
+                    <Button Command="{Binding AddClient}" CommandParameter="{Binding ElementName=ComposeInvoice}" Width="100" Margin="0,10,0,10">Выбрать</Button>
                     <Button Name="ClearClientBtn" Command="{Binding ClearClient}" Width="100" Margin="10">Очистить</Button>
                 </StackPanel>
                 <StackPanel  VerticalAlignment="Bottom" Grid.Row="2" Orientation="Horizontal" >

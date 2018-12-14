@@ -36,7 +36,22 @@ namespace StorageWpfApp.ViewModel
             _clients = new ListCollectionView(_db.Clients.Local.ToObservableCollection());
         }
 
+        public SelectClientViewModel(ProjectContext db, bool IsSelectionMode)
+        {
+            Messenger.Default.Register<UpdateClientsMsg>(this, prm => Search());
+            _db = db;
+            _clients = new ListCollectionView(_db.Clients.Local.ToObservableCollection());
+
+            if (IsSelectionMode)
+            {
+                IsVisible = Visibility.Visible;
+                InNotSelectionMode = Visibility.Collapsed;
+            }
+        }
+
         public Visibility IsVisible { get; set; } = Visibility.Collapsed;
+
+        public Visibility InNotSelectionMode { get; set; } = Visibility.Visible;
 
         private string _clientName = "";
         public string ClientName
@@ -127,6 +142,23 @@ namespace StorageWpfApp.ViewModel
             ));
         }
 
+        private RelayCommand<Window> _editClient;
+        public RelayCommand<Window> EditClient
+        {
+            get => _editClient ?? (_editClient = new RelayCommand<Window>(
+                mainWnd =>
+                {
+                    var editWnd = new AddNewClientView
+                    {
+                        Owner = mainWnd,
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                        DataContext = new EditClientViewModel(_db, SelectedClient)
+                    };
+                    editWnd.ShowDialog();
+                }, mainWnd => SelectedClient != null
+            ));
+        }
+
         private RelayCommand<Window> _selectClient;
         public RelayCommand<Window> SelectClient
         {
@@ -135,6 +167,7 @@ namespace StorageWpfApp.ViewModel
                 {
                     if (IsVisible == Visibility.Visible)
                     {
+                        mainWnd.DialogResult = true;
                         mainWnd.Close();
                         return;
                     }

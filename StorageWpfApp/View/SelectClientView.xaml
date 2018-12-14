@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="Клиенты" MinHeight="450" MinWidth="600"
         x:Name="ClientsWnd"
+        WindowStartupLocation="CenterOwner"
         Background="#fafafa">
     <Window.Resources>
         <ResourceDictionary>
@@ -168,10 +169,10 @@
             </DataGrid>
         </GroupBox>
         <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <Button Visibility="{Binding IsVisible}" HorizontalAlignment="Left" Margin="5">Выбрать</Button>
+            <Button Visibility="{Binding IsVisible}"  Command="{Binding SelectClient}" CommandParameter="{Binding ElementName=ClientsWnd}" HorizontalAlignment="Left" Margin="5">Выбрать</Button>
             <Button HorizontalAlignment="Left" Margin="5" Command="{Binding AddNewClient}" CommandParameter="{Binding ElementName=ClientsWnd}">Добавить</Button>
-            <Button HorizontalAlignment="Left" Margin="5" Command="{Binding SelectClient}" CommandParameter="{Binding ElementName=ClientsWnd}">Изменить</Button>
-            <Button HorizontalAlignment="Left" Margin="5" Command="{Binding DeleteClient}">Удалить</Button>
+            <Button HorizontalAlignment="Left" Margin="5" Command="{Binding EditClient}" CommandParameter="{Binding ElementName=ClientsWnd}">Изменить</Button>
+            <Button Visibility="{Binding InNotSelectionMode}" HorizontalAlignment="Left" Margin="5" Command="{Binding DeleteClient}">Удалить</Button>
         </StackPanel>
     </Grid>
 </Window>
