@@ -38,6 +38,29 @@ namespace StorageWpfApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Invoices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ClientId = table.Column<int>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    TotalDiscount = table.Column<double>(nullable: false),
+                    TotalAmount = table.Column<double>(nullable: false),
+                    TotalPayed = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Invoices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Invoices_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -56,62 +79,6 @@ namespace StorageWpfApp.Migrations
                         name: "FK_Products_Groups_GroupId",
                         column: x => x.GroupId,
                         principalTable: "Groups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Consignments",
-                columns: table => new
-                {
-                    Date = table.Column<DateTime>(nullable: true),
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Quantity = table.Column<int>(nullable: false),
-                    PurchasePrice = table.Column<double>(nullable: false),
-                    SellingPrice = table.Column<double>(nullable: false),
-                    ProductId = table.Column<long>(nullable: true),
-                    CurrentPieceQuantity = table.Column<int>(nullable: false),
-                    IsPieceAllowed = table.Column<bool>(nullable: false),
-                    PiecePrice = table.Column<double>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Consignments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Consignments_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Invoices",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ClientId = table.Column<int>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    TotalDiscount = table.Column<double>(nullable: false),
-                    TotalAmount = table.Column<double>(nullable: false),
-                    TotalPayed = table.Column<double>(nullable: false),
-                    ConsignmentId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Invoices", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Invoices_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Invoices_Consignments_ConsignmentId",
-                        column: x => x.ConsignmentId,
-                        principalTable: "Consignments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -140,6 +107,53 @@ namespace StorageWpfApp.Migrations
                         name: "FK_Debts_Invoices_InvoiceId",
                         column: x => x.InvoiceId,
                         principalTable: "Invoices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Consignments",
+                columns: table => new
+                {
+                    Date = table.Column<DateTime>(nullable: true),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Code = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    PurchasePrice = table.Column<double>(nullable: false),
+                    SellingPrice = table.Column<double>(nullable: false),
+                    ProductId = table.Column<long>(nullable: true),
+                    CurrentPieceQuantity = table.Column<int>(nullable: false),
+                    IsPieceAllowed = table.Column<bool>(nullable: false),
+                    PiecePrice = table.Column<double>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Consignments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Consignments_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DebtPayments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    DebtId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DebtPayments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DebtPayments_Debts_DebtId",
+                        column: x => x.DebtId,
+                        principalTable: "Debts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -200,26 +214,6 @@ namespace StorageWpfApp.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "DebtPayments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    DebtId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DebtPayments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DebtPayments_Debts_DebtId",
-                        column: x => x.DebtId,
-                        principalTable: "Debts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Consignments_ProductId",
                 table: "Consignments",
@@ -245,11 +239,6 @@ namespace StorageWpfApp.Migrations
                 name: "IX_Invoices_ClientId",
                 table: "Invoices",
                 column: "ClientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Invoices_ConsignmentId",
-                table: "Invoices",
-                column: "ConsignmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PieceOrders_ConsignmentId",
@@ -298,16 +287,16 @@ namespace StorageWpfApp.Migrations
                 name: "Debts");
 
             migrationBuilder.DropTable(
-                name: "Invoices");
-
-            migrationBuilder.DropTable(
-                name: "Clients");
-
-            migrationBuilder.DropTable(
                 name: "Consignments");
 
             migrationBuilder.DropTable(
+                name: "Invoices");
+
+            migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Clients");
 
             migrationBuilder.DropTable(
                 name: "Groups");

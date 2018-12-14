@@ -195,7 +195,13 @@ namespace StorageWpfApp.ViewModel
                     Invoice.TotalAmount = TotalPriceWithoutDiscount;
 
                     _db.Invoices.Add(Invoice);
+
                     _db.SaveChanges();
+
+                    if (PieceOrders.Count > 0)
+                        _db.PieceOrders.AddRange(PieceOrders);
+                    if (SingleOrders.Count > 0)
+                        _db.SingleOrders.AddRange(SingleOrders);
 
                     if (Client != null)
                     {

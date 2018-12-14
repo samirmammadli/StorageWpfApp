@@ -149,6 +149,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}" Header="Дата добавления" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Product.Code}" Header="Код товара" MinWidth="150" Width="1*"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Code}" Header="Код партии" MinWidth="150" Width="1*"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Product.Name}" Header="Наименование" MinWidth="150" Width="1*"/>
                     <DataGridTextColumn CellStyle="{StaticResource Alert}" IsReadOnly="True" Binding="{Binding Quantity}" Header="Количество" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding PurchasePrice}" MinWidth="150" Header="Закупочная цена" Width="Auto"/>

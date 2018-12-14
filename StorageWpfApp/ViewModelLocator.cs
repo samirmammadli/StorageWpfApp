@@ -5,6 +5,7 @@ using StorageWpfApp.Navigation;
 using StorageWpfApp.ViewModel;
 using System;
 using System.Collections.Generic;
+using StorageWpfApp.ExtensionMethods.RepoExtentions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,6 +86,7 @@ namespace StorageWpfApp
                         cons.PiecePrice = rnd.Next(10, 150);
                     }
                     _db.Consignments.Add(cons);
+                    _db.AddCodeToConsignment(cons);
                 }
 
                 _db.Clients.AddRange(

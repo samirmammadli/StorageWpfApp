@@ -10,6 +10,8 @@ namespace StorageWpfApp.Entities
 
         public int Id { get; set; }
 
+        public int Code { get; set;}
+
         public int Quantity { get; set; }
 
         public double PurchasePrice { get; set; }
@@ -26,7 +28,9 @@ namespace StorageWpfApp.Entities
 
         public double? PiecePrice { get; set; }
 
-        public IEnumerable<Invoice> Invoices { get; set; }
+        public IEnumerable<PieceOrder> PieceOrders { get; set; }
+
+        public IEnumerable<SingleOrder> SingleOrders { get; set; }
 
 
         [NotMapped]

@@ -9,7 +9,7 @@ using StorageWpfApp.Entities;
 namespace StorageWpfApp.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    [Migration("20181214122119_Initial")]
+    [Migration("20181214132212_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,8 @@ namespace StorageWpfApp.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Code");
 
                     b.Property<int>("CurrentPieceQuantity");
 
@@ -114,8 +116,6 @@ namespace StorageWpfApp.Migrations
 
                     b.Property<int?>("ClientId");
 
-                    b.Property<int?>("ConsignmentId");
-
                     b.Property<DateTime>("Date");
 
                     b.Property<double>("TotalAmount");
@@ -127,8 +127,6 @@ namespace StorageWpfApp.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("ConsignmentId");
 
                     b.ToTable("Invoices");
                 });
@@ -226,7 +224,7 @@ namespace StorageWpfApp.Migrations
             modelBuilder.Entity("StorageWpfApp.Entities.Debt", b =>
                 {
                     b.HasOne("StorageWpfApp.Entities.Client", "Client")
-                        .WithMany()
+                        .WithMany("Debts")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -249,16 +247,12 @@ namespace StorageWpfApp.Migrations
                     b.HasOne("StorageWpfApp.Entities.Client", "Client")
                         .WithMany()
                         .HasForeignKey("ClientId");
-
-                    b.HasOne("StorageWpfApp.Entities.Consignment")
-                        .WithMany("Invoices")
-                        .HasForeignKey("ConsignmentId");
                 });
 
             modelBuilder.Entity("StorageWpfApp.Entities.PieceOrder", b =>
                 {
                     b.HasOne("StorageWpfApp.Entities.Consignment", "Consignment")
-                        .WithMany()
+                        .WithMany("PieceOrders")
                         .HasForeignKey("ConsignmentId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -278,7 +272,7 @@ namespace StorageWpfApp.Migrations
             modelBuilder.Entity("StorageWpfApp.Entities.SingleOrder", b =>
                 {
                     b.HasOne("StorageWpfApp.Entities.Consignment", "Consignment")
-                        .WithMany()
+                        .WithMany("SingleOrders")
                         .HasForeignKey("ConsignmentId")
                         .OnDelete(DeleteBehavior.Cascade);
 

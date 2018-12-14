@@ -171,6 +171,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Product.Code}"  Header="Код товара" MinWidth="150" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Code}"  Header="Код партии" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Product.Name}" Header="Наименование" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.SellingPrice}" Header="Цена за еденицу" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Quantity}" Header="Доступное кол-во" MinWidth="150" Width="Auto"/>
@@ -216,6 +217,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Product.Code}"  Header="Код товара" MinWidth="150" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Code}"  Header="Код партии" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Product.Name}" Header="Наименование" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.PiecePrice}" Header="Цена за еденицу" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.CurrentPieceQuantity}" Header="Доступное кол-во" MinWidth="150" Width="Auto"/>

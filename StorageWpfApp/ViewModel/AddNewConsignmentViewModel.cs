@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Microsoft.EntityFrameworkCore;
 using StorageWpfApp.Entities;
 using StorageWpfApp.ExtensionMethods;
+using StorageWpfApp.ExtensionMethods.RepoExtentions;
 using StorageWpfApp.Messages;
 using StorageWpfApp.View;
 using System;
@@ -296,6 +297,7 @@ namespace StorageWpfApp.ViewModel
                 SelectedConsignment.CurrentPieceQuantity = (int)SelectedProduct.PieceQuantity * SelectedConsignment.Quantity;
             }
 
+            _db.AddCodeToConsignment(SelectedConsignment);
             _db.Consignments.Add(SelectedConsignment);
         }
 
