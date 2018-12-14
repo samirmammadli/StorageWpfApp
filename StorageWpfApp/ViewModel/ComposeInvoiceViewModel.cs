@@ -93,9 +93,7 @@ namespace StorageWpfApp.ViewModel
             {
                 if (value.IsDouble() && value.StringToDouble() < totalSumWithDiscountTemp)
                 {
-
                     Set(ref _additionalTotalDiscount, value);
-
                     CalculateTotalSum();
                 }
             }
@@ -107,7 +105,7 @@ namespace StorageWpfApp.ViewModel
             get => _debtAmount;
             set
             {
-                if (value.IsDouble() && value.StringToDouble() <= TotalPriceWithDiscount)
+                if (value.IsDouble() && value.StringToDouble() <= totalSumWithDiscountTemp)
                 {
 
                     Set(ref _debtAmount, value);
@@ -229,7 +227,6 @@ namespace StorageWpfApp.ViewModel
 
         private void SubscribeToSumPropertyChangedSingle(object sender, NotifyCollectionChangedEventArgs e)
         {
-            CalculateTotalSum();
 
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
@@ -255,11 +252,12 @@ namespace StorageWpfApp.ViewModel
                     }
                 }
             }
+
+            CalculateTotalSum();
         }
 
         private void SubscribeToSumPropertyChangedPiece(object sender, NotifyCollectionChangedEventArgs e)
         {
-            CalculateTotalSum();
 
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
@@ -285,6 +283,8 @@ namespace StorageWpfApp.ViewModel
                     }
                 }
             }
+
+            CalculateTotalSum();
         }
 
         private void CalculateTotalSumEventHandler(object sender, PropertyChangedEventArgs e)
@@ -296,11 +296,19 @@ namespace StorageWpfApp.ViewModel
         {
             totalSumWithDiscountTemp = SingleOrders.Sum(x => x.Sum) + PieceOrders.Sum(x => x.Sum);
 
+            if (AdditionalTotalDiscount.StringToDouble() > totalSumWithDiscountTemp)
+            {
+                _additionalTotalDiscount = "0";
+                RaisePropertyChanged(nameof(AdditionalTotalDiscount));
+            }
+
             TotalPriceWithDiscount = totalSumWithDiscountTemp - AdditionalTotalDiscount.StringToDouble();
 
             TotalPriceWithoutDiscount = TotalPriceWithDiscount + SingleOrders.Sum(x => x.Discount * x.Count) + PieceOrders.Sum(x=> x.Discount * x.Count) + AdditionalTotalDiscount.StringToDouble();
 
             TotalSumToPay = TotalPriceWithDiscount - DebtAmount.StringToDouble();
+
+            
         }
 
         public ComposeInvoiceViewModel(ProjectContext db)
