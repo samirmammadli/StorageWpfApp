@@ -36,8 +36,8 @@ namespace StorageWpfApp.Entities
             {
                 if (value > 0)
                 {
-                    if (value > Consignment.TotalPieceQuantity.StringToInteger())
-                        Set(ref _count, Consignment.TotalPieceQuantity.StringToInteger());
+                    if (value > Consignment.CurrentPieceQuantity)
+                        Set(ref _count, Consignment.CurrentPieceQuantity);
                     else
                         Set(ref _count, value);
 
