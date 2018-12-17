@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using Microsoft.EntityFrameworkCore;
 using StorageWpfApp.Entities;
 using StorageWpfApp.ExtensionMethods;
 using StorageWpfApp.View;
@@ -19,7 +20,8 @@ namespace StorageWpfApp.ViewModel
     {
         private ProjectContext _db;
 
-        
+        private string _errorMessage;
+
         private ObservableCollection<PieceOrder> _pieceOrders;
         public ObservableCollection<PieceOrder> PieceOrders
         {
@@ -183,12 +185,56 @@ namespace StorageWpfApp.ViewModel
             ));
         }
 
+        private bool ValidateSolProductsQuantity()
+        {
+            if (PieceOrders.Count > 0 && SingleOrders.Count > 0)
+            {
+                var ordersWithSameConsignment = PieceOrders.Select(x => x.Consignment).Intersect(SingleOrders.Select(x => x.Consignment));
+
+                if (ordersWithSameConsignment != null)
+                {
+                    foreach (var item in ordersWithSameConsignment)
+                    {
+
+
+                        var single = SingleOrders.FirstOrDefault(x => x.Consignment == item);
+                        var piece = PieceOrders.FirstOrDefault(x => x.Consignment == item);
+
+                        var singleCount = single.Consignment.Quantity - single.Count;
+
+                        {
+                            var balance = piece.Consignment.CurrentPieceQuantity % piece.Consignment.Product.PieceQuantity.Value;
+
+
+
+                            var balanceFromCount = balance - piece.Count;
+                            if (balanceFromCount < 0)
+                            {
+
+                                MessageBox.Show(piece.Consignment.Product.PieceQuantity.ToString());
+                                if (singleCount - (Math.Abs(balanceFromCount) / piece.Consignment.Product.PieceQuantity) < 0)
+                                {
+                                    MessageBox.Show($"Некорректно указано количество\nштучных и целых в товаре под кодом: {single.Consignment.Code}");
+                                    return false;
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            return true;
+        }
+
         private bool AddInvoiceToDatabase()
         {
             using (var transaction = _db.Database.BeginTransaction())
             {
                 try
                 {
+                    SubstractProductsFromConsignments();
+
                     Invoice.Date = InvoiceDate;
                     Invoice.TotalPayed = TotalSumToPay;
                     Invoice.TotalDiscount = TotalPriceWithoutDiscount - TotalPriceWithDiscount;
@@ -206,7 +252,7 @@ namespace StorageWpfApp.ViewModel
                     if (Client != null)
                     {
                         Invoice.Client = Client;
-                        if (DebtAmount.StringToDouble() > 0 )
+                        if (DebtAmount.StringToDouble() > 0)
                         {
                             var clientDebt = new Debt
                             {
@@ -226,6 +272,14 @@ namespace StorageWpfApp.ViewModel
                 catch (Exception ex)
                 {
                     transaction.Rollback();
+
+                    var cons = SingleOrders.Select(x => x.Consignment).Union(PieceOrders.Select(x => x.Consignment)).Distinct();
+
+                    foreach (var item in cons)
+                    {
+                        _db.Entry<Consignment>(item).Reload();
+                    }
+
                     return false;
                 }
 
@@ -233,6 +287,40 @@ namespace StorageWpfApp.ViewModel
             }
 
             return true;
+        }
+
+        private void SubstractProductsFromConsignments()
+        {
+            foreach (var item in SingleOrders)
+            {
+                item.Consignment.Quantity -= item.Count;
+            }
+
+
+            foreach (var item in PieceOrders)
+            {
+                var balance = item.Consignment.CurrentPieceQuantity % item.Consignment.Product.PieceQuantity.Value;
+
+                var balanceFromCount = balance - item.Count;
+
+                if (balanceFromCount < 0)
+                {
+                    var singleProductsToSubstract = Math.Abs(balanceFromCount) / item.Consignment.Product.PieceQuantity.Value;
+
+                    if (singleProductsToSubstract % item.Consignment.Product.PieceQuantity.Value == 0)
+                        item.Consignment.Quantity -= singleProductsToSubstract;
+                    else
+                        item.Consignment.Quantity -= (singleProductsToSubstract + 1);
+
+                    if (item.Consignment.Quantity < 0)
+                    {
+                        _errorMessage = $"Введены неверные значения количества\nв товаре под кодом: {item.Consignment.Product.Code} с кодом партии: {item.Consignment.Code}";
+                        throw new ArgumentException("Products count is not correct");
+                    }
+                }
+
+                item.Consignment.CurrentPieceQuantity -= item.Count;
+            }
         }
 
         private bool CheckAll()
@@ -262,7 +350,7 @@ namespace StorageWpfApp.ViewModel
         }
 
         private RelayCommand<SingleOrder> _removeFromSingle;
-        public RelayCommand<SingleOrder>  RemoveFromSingle
+        public RelayCommand<SingleOrder> RemoveFromSingle
         {
             get => _removeFromSingle ?? (_removeFromSingle = new RelayCommand<SingleOrder>(
                 order =>
@@ -402,7 +490,7 @@ namespace StorageWpfApp.ViewModel
 
             TotalPriceWithDiscount = totalSumWithDiscountTemp - AdditionalTotalDiscount.StringToDouble();
 
-            TotalPriceWithoutDiscount = TotalPriceWithDiscount + SingleOrders.Sum(x => x.Discount * x.Count) + PieceOrders.Sum(x=> x.Discount * x.Count) + AdditionalTotalDiscount.StringToDouble();
+            TotalPriceWithoutDiscount = TotalPriceWithDiscount + SingleOrders.Sum(x => x.Discount * x.Count) + PieceOrders.Sum(x => x.Discount * x.Count) + AdditionalTotalDiscount.StringToDouble();
 
             if (DebtAmount.StringToDouble() > TotalPriceWithDiscount)
             {
