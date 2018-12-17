@@ -294,6 +294,11 @@ namespace StorageWpfApp.ViewModel
             foreach (var item in SingleOrders)
             {
                 item.Consignment.Quantity -= item.Count;
+
+                if (item.Consignment.IsPieceAllowed)
+                {
+                    item.Consignment.CurrentPieceQuantity -= item.Count * item.Consignment.Product.PieceQuantity.Value;
+                }
             }
 
 
@@ -307,7 +312,7 @@ namespace StorageWpfApp.ViewModel
                 {
                     var singleProductsToSubstract = Math.Abs(balanceFromCount) / item.Consignment.Product.PieceQuantity.Value;
 
-                    if (singleProductsToSubstract % item.Consignment.Product.PieceQuantity.Value == 0)
+                    if (Math.Abs(balanceFromCount) % item.Consignment.Product.PieceQuantity.Value == 0)
                         item.Consignment.Quantity -= singleProductsToSubstract;
                     else
                         item.Consignment.Quantity -= (singleProductsToSubstract + 1);
@@ -343,7 +348,13 @@ namespace StorageWpfApp.ViewModel
                         wnd.Close();
                     }
                     else
-                        MessageBox.Show("Что то пошло не так!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    {
+                        var msg = "Что то пошло не так!";
+                        if (_errorMessage != null)
+                            msg = _errorMessage;
+                        MessageBox.Show(msg, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        msg = null;
+                    }
                 },
                 wnd => CheckAll()
             ));
@@ -391,6 +402,12 @@ namespace StorageWpfApp.ViewModel
 
         private void AddSingleOrder(Consignment cons)
         {
+            if (cons.Quantity <= 0)
+            {
+                MessageBox.Show("Нельзя добавить товар с нулевым количеством!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             SingleOrders.Add(new SingleOrder
             {
                 Consignment = cons,
@@ -402,6 +419,12 @@ namespace StorageWpfApp.ViewModel
 
         private void AddPieceOrder(Consignment cons)
         {
+            if (cons.CurrentPieceQuantity <= 0)
+            {
+                MessageBox.Show("Нельзя добавить товар с нулевым количеством!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             PieceOrders.Add(new PieceOrder
             {
                 Consignment = cons,
