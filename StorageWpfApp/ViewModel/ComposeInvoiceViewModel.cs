@@ -185,48 +185,6 @@ namespace StorageWpfApp.ViewModel
             ));
         }
 
-        private bool ValidateSolProductsQuantity()
-        {
-            if (PieceOrders.Count > 0 && SingleOrders.Count > 0)
-            {
-                var ordersWithSameConsignment = PieceOrders.Select(x => x.Consignment).Intersect(SingleOrders.Select(x => x.Consignment));
-
-                if (ordersWithSameConsignment != null)
-                {
-                    foreach (var item in ordersWithSameConsignment)
-                    {
-
-
-                        var single = SingleOrders.FirstOrDefault(x => x.Consignment == item);
-                        var piece = PieceOrders.FirstOrDefault(x => x.Consignment == item);
-
-                        var singleCount = single.Consignment.Quantity - single.Count;
-
-                        {
-                            var balance = piece.Consignment.CurrentPieceQuantity % piece.Consignment.Product.PieceQuantity.Value;
-
-
-
-                            var balanceFromCount = balance - piece.Count;
-                            if (balanceFromCount < 0)
-                            {
-
-                                MessageBox.Show(piece.Consignment.Product.PieceQuantity.ToString());
-                                if (singleCount - (Math.Abs(balanceFromCount) / piece.Consignment.Product.PieceQuantity) < 0)
-                                {
-                                    MessageBox.Show($"Некорректно указано количество\nштучных и целых в товаре под кодом: {single.Consignment.Code}");
-                                    return false;
-                                }
-                            }
-                        }
-
-                    }
-                }
-            }
-
-            return true;
-        }
-
         private bool AddInvoiceToDatabase()
         {
             using (var transaction = _db.Database.BeginTransaction())
