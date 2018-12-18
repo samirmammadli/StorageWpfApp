@@ -79,8 +79,6 @@ namespace StorageWpfApp.Migrations
 
                     b.Property<int>("InvoiceId");
 
-                    b.Property<double>("Payed");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");

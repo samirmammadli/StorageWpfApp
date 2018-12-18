@@ -132,6 +132,25 @@ namespace StorageWpfApp.ViewModel
             ));
         }
 
+        private RelayCommand _deleteConsignment;
+        public RelayCommand DeleteConsignment
+        {
+            get => _deleteConsignment ?? (_deleteConsignment = new RelayCommand(
+                async () =>
+                {
+                    if (_db.PieceOrders.Any(x => x.Consignment == SelectedConsignment) || _db.SingleOrders.Any(x => x.Consignment == SelectedConsignment))
+                        MessageBox.Show("Имеются накладные с данной партией!", "Невозможно удалить!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    else
+                    {
+                        _db.Consignments.Local.Remove(SelectedConsignment);
+                         await _db.SaveChangesAsync();
+                    }
+                },
+                () => SelectedConsignment != null
+            ));
+        }
+
+
         //EditOrSelect
         private RelayCommand<Window> _editOrSelect;
         public RelayCommand<Window> EditOrSelect

@@ -20,8 +20,6 @@ namespace StorageWpfApp.Entities
 
         public double Amount { get; set; }
 
-        public double Payed { get; set; }
-
         public IEnumerable<DebtPayment> DebtPayments { get; set; }
     }
 }

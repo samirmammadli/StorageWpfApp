@@ -9,7 +9,7 @@ using StorageWpfApp.Entities;
 namespace StorageWpfApp.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    [Migration("20181214132212_Initial")]
+    [Migration("20181218065006_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,8 +80,6 @@ namespace StorageWpfApp.Migrations
                     b.Property<int>("ClientId");
 
                     b.Property<int>("InvoiceId");
-
-                    b.Property<double>("Payed");
 
                     b.HasKey("Id");
 

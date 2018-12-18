@@ -91,8 +91,7 @@ namespace StorageWpfApp.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     ClientId = table.Column<int>(nullable: false),
                     InvoiceId = table.Column<int>(nullable: false),
-                    Amount = table.Column<double>(nullable: false),
-                    Payed = table.Column<double>(nullable: false)
+                    Amount = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {

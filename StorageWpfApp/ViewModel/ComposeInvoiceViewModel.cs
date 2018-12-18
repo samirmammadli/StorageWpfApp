@@ -117,7 +117,16 @@ namespace StorageWpfApp.ViewModel
             }
         }
 
-
+        private RelayCommand<Window> _closeWindow;
+        public RelayCommand<Window> CloseWindow
+        {
+            get => _closeWindow ?? (_closeWindow = new RelayCommand<Window>(
+                window =>
+                {
+                    window.Close();
+                }
+            ));
+        }
 
         private RelayCommand<Window> _addSingleCons;
         public RelayCommand<Window> AddSingleCons
