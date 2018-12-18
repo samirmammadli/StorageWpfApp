@@ -180,13 +180,6 @@ namespace StorageWpfApp.ViewModel
             ));
         }
 
-        public void Window_Closing(object sender, CancelEventArgs e)
-        {
-            if (MessageBox.Show("Выйти из программы?", "Выход", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
-                e.Cancel = true;
-            return;
-        }
-
         private RelayCommand _closeAppConmmand;
         public RelayCommand CloseAppConmmand
         {
