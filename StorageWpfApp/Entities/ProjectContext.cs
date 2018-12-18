@@ -17,11 +17,11 @@ namespace StorageWpfApp.Entities
             modelBuilder.Entity<Product>().Property(p => p.IsPieceProduct).HasDefaultValue(false);
             modelBuilder.Entity<Product>().HasIndex(i => i.Code).IsUnique();
             modelBuilder.Entity<Consignment>().HasOne(p => p.Product).WithMany(c => c.Consignments).HasForeignKey(k => k.ProductId);
+            modelBuilder.Entity<Debt>().Property(d => d.IsFullyPayed).HasDefaultValue(false);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionbuilder)
         {
-           
             optionbuilder.UseSqlite(@"Data Source=Storage.db");
         }
 

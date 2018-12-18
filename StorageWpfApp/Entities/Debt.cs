@@ -18,6 +18,8 @@ namespace StorageWpfApp.Entities
 
         public Invoice Invoice { get; set; }
 
+        public bool IsFullyPayed { get; set; }
+
         public double Amount { get; set; }
 
         public IEnumerable<DebtPayment> DebtPayments { get; set; }
