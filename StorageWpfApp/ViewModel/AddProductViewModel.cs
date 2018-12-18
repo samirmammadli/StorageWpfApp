@@ -44,6 +44,8 @@ namespace StorageWpfApp.ViewModel
 
         private bool CheckAll()
         {
+            if (IsPieceAllowed)
+                return !string.IsNullOrWhiteSpace(PPieceCount) && !string.IsNullOrWhiteSpace(Pcode);
             return !string.IsNullOrWhiteSpace(Pcode);
         }
 
@@ -53,6 +55,26 @@ namespace StorageWpfApp.ViewModel
             get => _pName;
             set => Set(ref _pName, value);
         }
+
+        private string _pPieceCount = "";
+        public string PPieceCount
+        {
+            get => _pPieceCount;
+            set
+            {
+                if (value.IsCorrectInt())
+                    Set(ref _pPieceCount, value);
+            }
+        }
+
+
+        private bool _isPieceAllowed;
+        public bool IsPieceAllowed
+        {
+            get { return _isPieceAllowed; }
+            set { _isPieceAllowed = value; }
+        }
+
 
         private string _pCode = "";
         public string Pcode
@@ -83,6 +105,13 @@ namespace StorageWpfApp.ViewModel
             Product.Code = Pcode;
             Product.Name = PName;
             Product.Group = SelectedGroup;
+            Product.IsPieceProduct = false;
+
+            if (IsPieceAllowed)
+            {
+                Product.IsPieceProduct = true;
+                Product.PieceQuantity = PPieceCount.StringToInteger();
+            }
         }
 
         private RelayCommand<Window> _saveChanges;

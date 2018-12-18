@@ -204,7 +204,7 @@ namespace StorageWpfApp.ViewModel
                 mainWnd =>
                 {
                     var cont = new AddProductViewModel(_db);
-                    var addWnd = new EditProduct
+                    var addWnd = new AddProductView
                     {
                         DataContext = cont
                     };

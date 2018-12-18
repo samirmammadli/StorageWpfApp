@@ -238,6 +238,9 @@
     <Compile Include="View\AddNewConsignmentView.xaml.cs">
       <DependentUpon>AddNewConsignmentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AddProductView.xaml.cs">
+      <DependentUpon>AddProductView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddProductWithConsignmentView.xaml.cs">
       <DependentUpon>AddProductWithConsignmentView.xaml</DependentUpon>
     </Compile>
@@ -295,6 +298,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AddNewConsignmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddProductView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
