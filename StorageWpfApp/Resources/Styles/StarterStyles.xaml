@@ -20,6 +20,8 @@
 
     <Style x:Key="Alert" BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
         <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Padding" Value="0,5,0,0" />
         <Style.Triggers>
             <Trigger Property="DataGridCell.IsSelected" Value="True">
                 <Setter Property="Background" Value="#f76a6a"/>
@@ -39,6 +41,8 @@
     </Style>
 
     <Style x:Key="PieceCells" BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Padding" Value="0,5,0,0" />
         <Setter Property="Background" Value="#f4f4cb" />
         <Setter Property="BorderBrush" Value="#f4f4cb"/>
         <Setter Property="Focusable" Value="False"/>
