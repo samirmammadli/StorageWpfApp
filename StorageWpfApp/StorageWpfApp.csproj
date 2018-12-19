@@ -189,6 +189,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\ConvertersStaticData.cs" />
+    <Compile Include="Converters\NameAndLastNameConverter.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\Consignment.cs" />
     <Compile Include="Entities\Debt.cs" />
@@ -252,6 +253,9 @@
     </Compile>
     <Compile Include="View\EditGroupView.xaml.cs">
       <DependentUpon>EditGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FullReportView.xaml.cs">
+      <DependentUpon>FullReportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -318,6 +322,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EditGroupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FullReportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
