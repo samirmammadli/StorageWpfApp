@@ -15,8 +15,8 @@
 
 
     <Style x:Key="PieceHeaders" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="Background" Value="#f4f4cb"/>
-                </Style>
+        <Setter Property="Background" Value="#f4f4cb"/>
+    </Style>
 
     <Style x:Key="Alert" BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
         <Setter Property="Focusable" Value="False"/>
@@ -42,7 +42,7 @@
 
     <Style x:Key="PieceCells" BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
         <Setter Property="Height" Value="30"/>
-        <Setter Property="Padding" Value="0,5,0,0" />
+        <Setter Property="Padding" Value="12,5,0,0" />
         <Setter Property="Background" Value="#f4f4cb" />
         <Setter Property="BorderBrush" Value="#f4f4cb"/>
         <Setter Property="Focusable" Value="False"/>

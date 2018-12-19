@@ -91,6 +91,22 @@ namespace StorageWpfApp.ViewModel
             ));
         }
 
+        private RelayCommand<Window> _fullReport;
+        public RelayCommand<Window> FullReport
+        {
+            get => _fullReport ?? (_fullReport = new RelayCommand<Window>(
+                mainWnd =>
+                {
+                    var addWnd = new FullReportView
+                    {
+                        DataContext = new FullReportViewModel(_db)
+                    };
+                    addWnd.Owner = mainWnd;
+                    addWnd.ShowDialog();
+                }
+            ));
+        }
+
         private RelayCommand<Window> _consignmentsList;
         public RelayCommand<Window> ConsignmentsList
         {

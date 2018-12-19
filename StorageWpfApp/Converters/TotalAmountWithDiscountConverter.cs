@@ -4,13 +4,13 @@ using System.Windows.Data;
 
 namespace StorageWpfApp.Converters
 {
-    class NameAndLastNameConverter : IMultiValueConverter
+    public class TotalAmountWithDiscountConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
-                return (values[0] as string) + " " + (values[1] as string);
+                return ((double)values[0] - (double)values[1]).ToString();
             }
             catch (Exception)
             {
@@ -20,7 +20,7 @@ namespace StorageWpfApp.Converters
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }

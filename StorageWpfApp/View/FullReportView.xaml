@@ -20,7 +20,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Resources/Styles/StarterStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <conv:NameAndLastNameConverter x:Key="Converter"/>
+            <conv:NameAndLastNameConverter x:Key="NameSurnameConverter"/>
+            <conv:TotalAmountWithDiscountConverter x:Key="TotalAmountConverter"/>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -41,7 +42,7 @@
                 <DataGrid.CellStyle>
                     <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
                         <Setter Property="Height" Value="30"/>
-                        <Setter Property="Padding" Value="0,5,0,0" />
+                        <Setter Property="Padding" Value="12,5,0,0" />
                         <!--<Setter Property="Focusable" Value="False"/>-->
                         <Style.Triggers>
                             <Trigger Property="DataGridCell.IsSelected" Value="True">
@@ -53,21 +54,26 @@
                     </Style>
                 </DataGrid.CellStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Product.Code}"  Header="Дата" MinWidth="100" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Code}"  Header="Номер накладной" MinWidth="150" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"  Header="Дата" MinWidth="100" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Id}"  Header="Номер накладной" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Header="Клиент" MinWidth="100" Width="Auto">
                         <DataGridTextColumn.Binding>
-                            <MultiBinding Converter="{StaticResource Converter}">
+                            <MultiBinding Converter="{StaticResource NameSurnameConverter}">
                                 <Binding Path="Client.Name"/>
                                 <Binding Path="Client.Surname"/>
                             </MultiBinding>
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.SellingPrice}" Header="Цена за еденицу" MinWidth="150" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Quantity}" Header="Доступное кол-во" MinWidth="150" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Count}" Header="Количество" MinWidth="150" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Discount}" Header="Скидка на ед." MinWidth="100" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Sum}" Header="Сумма" MinWidth="150" Width="*"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalDiscount}" Header="Скидка" MinWidth="50" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="К оплате" MinWidth="50" Width="Auto">
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding Converter="{StaticResource TotalAmountConverter}">
+                                <Binding Path="TotalAmount"/>
+                                <Binding Path="TotalDiscount"/>
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding TotalPayed}" Header="Оплачено" MinWidth="50" Width="Auto"/>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>

@@ -58,6 +58,9 @@
                     <MenuItem x:Name="Consignments" Header="Список партий" Command="{Binding ConsignmentsList}" CommandParameter="{Binding ElementName=Window}" HorizontalAlignment="Left"/>
                     <MenuItem x:Name="AddConsignment" Header="Новая партия" Command="{Binding AddConsignment}" CommandParameter="{Binding ElementName=Window}" HorizontalAlignment="Left"/>
                 </MenuItem>
+                <MenuItem Header="Отчеты">
+                    <MenuItem Header="Полный отчет" Command="{Binding FullReport}" CommandParameter="{Binding ElementName=Window}" HorizontalAlignment="Left"/>
+                </MenuItem>
             </Menu>
         </StackPanel>
         <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"/>

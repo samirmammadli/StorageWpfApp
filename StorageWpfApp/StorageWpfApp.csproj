@@ -190,6 +190,7 @@
     </Compile>
     <Compile Include="Converters\ConvertersStaticData.cs" />
     <Compile Include="Converters\NameAndLastNameConverter.cs" />
+    <Compile Include="Converters\TotalAmountWithDiscountConverter.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\Consignment.cs" />
     <Compile Include="Entities\Debt.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="ViewModel\ConsignmentsViewModel.cs" />
     <Compile Include="ViewModel\EditClientViewModel.cs" />
     <Compile Include="ViewModel\EditGroupViewModel.cs" />
+    <Compile Include="ViewModel\FullReportViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\AppViewModel.cs" />
     <Compile Include="ViewModel\EditProductViewModel.cs" />
