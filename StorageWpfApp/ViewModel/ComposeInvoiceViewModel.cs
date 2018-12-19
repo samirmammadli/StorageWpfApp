@@ -233,8 +233,8 @@ namespace StorageWpfApp.ViewModel
 
                             Invoice.Debt = clientDebt;
                         }
-                        _db.SaveChanges();
                     }
+                    _db.SaveChanges();
                 }
                 catch (Exception)
                 {

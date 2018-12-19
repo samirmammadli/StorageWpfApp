@@ -60,7 +60,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"  Header="Дата" MinWidth="100" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Id}"  Header="Номер" MinWidth="50" Width="Auto"/>
-                    <DataGridTextColumn SortMemberPath="Client.Name" IsReadOnly="True" Header="Клиент" MinWidth="100" Width="Auto">
+                    <DataGridTextColumn IsReadOnly="True" SortMemberPath="Client.Name" Header="Клиент" MinWidth="100" Width="Auto">
                         <DataGridTextColumn.Binding>
                             <MultiBinding Converter="{StaticResource NameSurnameConverter}">
                                 <Binding Path="Client.Name"/>
@@ -69,7 +69,7 @@
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalAmount}" Header="Сумма без скидок" MinWidth="50" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalDiscount}" Header="Скидка" MinWidth="50" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalDiscount, StringFormat=N2}" Header="Скидка" MinWidth="50" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding AmountToPay}" Header="К оплате" MinWidth="50" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding TotalPayed}" Header="Оплачено" MinWidth="50" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding DebtDisplay}" Header="Долг" MinWidth="50" Width="*"/>
