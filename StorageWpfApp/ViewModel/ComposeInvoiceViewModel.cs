@@ -236,7 +236,7 @@ namespace StorageWpfApp.ViewModel
                         _db.SaveChanges();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     transaction.Rollback();
 

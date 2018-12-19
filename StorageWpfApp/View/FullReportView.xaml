@@ -25,6 +25,10 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <GroupBox Margin="5" Style="{x:Null}" Header="Накладные">
             <DataGrid
                   Height="Auto"
@@ -55,8 +59,8 @@
                 </DataGrid.CellStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"  Header="Дата" MinWidth="100" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Id}"  Header="Номер накладной" MinWidth="150" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Header="Клиент" MinWidth="100" Width="Auto">
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Id}"  Header="Номер" MinWidth="50" Width="Auto"/>
+                    <DataGridTextColumn SortMemberPath="Client.Name" IsReadOnly="True" Header="Клиент" MinWidth="100" Width="Auto">
                         <DataGridTextColumn.Binding>
                             <MultiBinding Converter="{StaticResource NameSurnameConverter}">
                                 <Binding Path="Client.Name"/>
@@ -64,18 +68,56 @@
                             </MultiBinding>
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalAmount}" Header="Сумма без скидок" MinWidth="50" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalDiscount}" Header="Скидка" MinWidth="50" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Header="К оплате" MinWidth="50" Width="Auto">
-                        <DataGridTextColumn.Binding>
-                            <MultiBinding Converter="{StaticResource TotalAmountConverter}">
-                                <Binding Path="TotalAmount"/>
-                                <Binding Path="TotalDiscount"/>
-                            </MultiBinding>
-                        </DataGridTextColumn.Binding>
-                    </DataGridTextColumn>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding AmountToPay}" Header="К оплате" MinWidth="50" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding TotalPayed}" Header="Оплачено" MinWidth="50" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding DebtDisplay}" Header="Долг" MinWidth="50" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
+        <StatusBar Height="25" Grid.Row="1">
+            <StatusBarItem>
+                <TextBlock>Продано товаров на сумму:</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBox Style="{x:Null}" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Text="{Binding ProductsSoldSum}" IsReadOnly="True"></TextBox>
+            </StatusBarItem>
+            <Separator/>
+
+            <StatusBarItem>
+                <TextBlock>Оплачено товаров на сумму:</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBox Style="{x:Null}" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Text="{Binding ProductsPayedSum}" IsReadOnly="True"></TextBox>
+            </StatusBarItem>
+            <Separator/>
+
+            <StatusBarItem>
+                <TextBlock>Возвращено долгов на сумму:</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBox Style="{x:Null}" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Text="{Binding TotalSellingSum}" IsReadOnly="True"></TextBox>
+            </StatusBarItem>
+            <Separator/>
+
+            <StatusBarItem>
+                <TextBlock>Доход за аренду:</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBox Style="{x:Null}" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Text="{Binding TotalSellingSum}" IsReadOnly="True"></TextBox>
+            </StatusBarItem>
+            <Separator/>
+
+            <StatusBarItem>
+                <TextBlock>Общий доход (без учета долгов):</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBox Style="{x:Null}" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Text="{Binding TotalIncome}" IsReadOnly="True"></TextBox>
+            </StatusBarItem>
+
+            <StackPanel  Orientation="Horizontal">
+            </StackPanel>
+        </StatusBar>
     </Grid>
 </Window>
