@@ -15,8 +15,10 @@ namespace StorageWpfApp
        
         public App()
         {
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-US");
-            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+            var culture = new CultureInfo("en-US") { DateTimeFormat = CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat };
+
+            Thread.CurrentThread.CurrentUICulture = culture;
+            Thread.CurrentThread.CurrentCulture = culture;
 
             var app = new AppView();
             using (var locator = new ViewModelLocator())
