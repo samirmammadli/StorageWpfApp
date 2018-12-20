@@ -188,10 +188,7 @@ namespace StorageWpfApp.ViewModel
             if (SelectedProduct.IsPieceProduct)
             {
                 if (string.IsNullOrWhiteSpace(PPieceSellPrice) || PPieceSellPrice.StringToDouble() < PiecePriceCalculated.StringToDouble())
-                {
-                    //MessageBox.Show((PPieceSellPrice.StringToDouble() < PiecePriceCalculated.StringToDouble()).ToString());
                     return false;
-                }
             }
 
 

@@ -71,8 +71,8 @@
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalAmount}" Header="Сумма без скидок" MinWidth="50" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalDiscount, StringFormat=N2}" Header="Скидка" MinWidth="50" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding AmountToPay}" Header="К оплате" MinWidth="50" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding TotalPayed}" Header="Оплачено" MinWidth="50" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding DebtDisplay}" Header="Долг" MinWidth="50" Width="*"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalPayed}" Header="Оплачено" MinWidth="50" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding DebtDisplay}" Header="Долг" MinWidth="50" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
@@ -110,7 +110,7 @@
             <Separator/>
 
             <StatusBarItem>
-                <TextBlock>Общий доход (без учета долгов):</TextBlock>
+                <TextBlock>Общий доход (включая долги):</TextBlock>
             </StatusBarItem>
             <StatusBarItem>
                 <TextBox Style="{x:Null}" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Text="{Binding TotalIncome}" IsReadOnly="True"></TextBox>

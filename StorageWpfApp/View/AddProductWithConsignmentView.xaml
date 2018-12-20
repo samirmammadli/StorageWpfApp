@@ -207,6 +207,11 @@
                             </StackPanel>
 
                             <StackPanel HorizontalAlignment="Left">
+                                <Label Margin="10,0,0,0">Себестоимость за штуку:</Label>
+                                <TextBox IsEnabled="False" Margin="10,0,0,0" Width="150" Grid.Column="0"  Text="{Binding PiecePriceCalculated, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            </StackPanel>
+
+                            <StackPanel HorizontalAlignment="Left">
                                 <Label Margin="10,0,0,0">Всего штук:</Label>
                                 <TextBox IsEnabled="False" Margin="10,0,0,0" Width="150" x:Name="PSellPrice" Grid.Column="0"  Text="{Binding TotalPieceCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
                             </StackPanel>

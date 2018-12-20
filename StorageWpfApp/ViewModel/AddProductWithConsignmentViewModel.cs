@@ -55,6 +55,13 @@ namespace StorageWpfApp.ViewModel
             set { Set(ref _consDate, value); }
         }
 
+        private string _piecePriceCalculated;
+        public string PiecePriceCalculated
+        {
+            get { return _piecePriceCalculated; }
+            set => Set(ref _piecePriceCalculated, value);
+        }
+
         private bool _isConsignmentAddingSelected = false;
         public bool IsConsignmentAddingSelected
         {
@@ -68,7 +75,10 @@ namespace StorageWpfApp.ViewModel
             {
                 if (IsPieceAllowed)
                 {
-                    if (string.IsNullOrWhiteSpace(PPieceCount) || string.IsNullOrWhiteSpace(PPieceSellPrice))
+                    if (PPieceCount.StringToInteger() <= 0)
+                        return false;
+
+                    if (string.IsNullOrWhiteSpace(PPieceCount) || string.IsNullOrWhiteSpace(PPieceSellPrice) || PPieceSellPrice.StringToDouble() < PiecePriceCalculated.StringToDouble())
                         return false;
                 }
 
@@ -132,6 +142,11 @@ namespace StorageWpfApp.ViewModel
             {
                 if (value.IsCorrectInt())
                 {
+                    var val = value.StringToInteger();
+                    if (val == 0)
+                        PiecePriceCalculated = "";
+                    else
+                        PiecePriceCalculated = (PBuyPrice.StringToDouble() / val).ToString("#0.00");
                     Set(ref _pPieceCount, value);
                     SetTotalPieceCount();
                 }
@@ -159,7 +174,15 @@ namespace StorageWpfApp.ViewModel
             set
             {
                 if (value.IsDouble())
+                {
+                    var numb = value.StringToDouble();
+
+                    if (IsPieceAllowed)
+                    {
+                        PiecePriceCalculated = (numb / PPieceCount.StringToInteger()).ToString("#0.00");
+                    }
                     Set(ref _pBuyPrice, value);
+                }
             }
         }
 
