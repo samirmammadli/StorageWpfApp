@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:StorageWpfApp.View"
         mc:Ignorable="d"
         x:Name="AddConsignment"
-        Title="Редактор партий" Height="510" Width="600"
+        Title="Редактор партий" Height="560" Width="600"
         Background="#fafafa">
     <Window.InputBindings>
         <KeyBinding 
@@ -108,7 +108,8 @@
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Padding="0,10,0,10" IsEnabled="{Binding SelectedProduct.IsPieceProduct}" Style="{x:Null}" Header="Штучная продажа">
-                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <StackPanel Grid.Row="0">
+                        <StackPanel  Orientation="Horizontal">
                         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
 
 
@@ -141,6 +142,11 @@
                                 <Label Margin="10,0,0,0">Всего штук:</Label>
                                 <TextBox IsEnabled="False" Margin="10,0,0,0" Width="150" x:Name="PSellPrice" Grid.Column="0"  Text="{Binding TotalPieceCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
                             </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                        <StackPanel HorizontalAlignment="Left">
+                            <Label Margin="10,0,0,0">Себестоимость за штуку:</Label>
+                            <TextBox IsEnabled="False" Margin="10,0,0,0" Width="150" Grid.Column="0"  Text="{Binding PiecePriceCalculated, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>

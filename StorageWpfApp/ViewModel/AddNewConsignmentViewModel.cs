@@ -42,6 +42,14 @@ namespace StorageWpfApp.ViewModel
             set => Set(ref _isEnable, value);
         }
 
+        private string _piecePriceCalculated;
+        public string PiecePriceCalculated
+        {
+            get { return _piecePriceCalculated; }
+            set => Set(ref _piecePriceCalculated, value);
+        }
+
+
 
         private DateTime _consDate;
         public DateTime ConsDate
@@ -137,7 +145,15 @@ namespace StorageWpfApp.ViewModel
             set
             {
                 if (value.IsDouble())
+                {
+                    var numb = value.StringToDouble();
+
+                    if (SelectedProduct != null && SelectedProduct.IsPieceProduct)
+                    {
+                        PiecePriceCalculated = (numb / SelectedProduct.PieceQuantity.Value).ToString("#0.00");
+                    }
                     Set(ref _pBuyPrice, value);
+                }
             }
         }
 
