@@ -1,5 +1,7 @@
 ﻿using StorageWpfApp.View;
 using System.ComponentModel;
+using System.Globalization;
+using System.Threading;
 using System.Windows;
 
 
@@ -13,6 +15,9 @@ namespace StorageWpfApp
        
         public App()
         {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+
             var app = new AppView();
             using (var locator = new ViewModelLocator())
             {

@@ -187,8 +187,11 @@ namespace StorageWpfApp.ViewModel
 
             if (SelectedProduct.IsPieceProduct)
             {
-                if (string.IsNullOrWhiteSpace(PPieceSellPrice))
+                if (string.IsNullOrWhiteSpace(PPieceSellPrice) || PPieceSellPrice.StringToDouble() < PiecePriceCalculated.StringToDouble())
+                {
+                    //MessageBox.Show((PPieceSellPrice.StringToDouble() < PiecePriceCalculated.StringToDouble()).ToString());
                     return false;
+                }
             }
 
 
@@ -258,27 +261,6 @@ namespace StorageWpfApp.ViewModel
             ));
         }
 
-        //private void EditProduct()
-        //{
-        //    SelectedConsignment.IsPieceAllowed = IsPieceAllowed;
-        //    SelectedConsignment.Product = SelectedProduct;
-        //    SelectedConsignment.ProductId = SelectedProduct.Id;
-        //    SelectedConsignment.PurchasePrice = PBuyPrice.StringToDouble();
-        //    SelectedConsignment.Quantity = PCount.StringToInteger();
-        //    SelectedConsignment.SellingPrice = PSellPrice.StringToDouble();
-
-        //    if (IsPieceAllowed)
-        //    {
-        //        SelectedConsignment.PiecePrice = PPieceSellPrice.StringToDouble();
-        //        SelectedConsignment.PieceQuantity = PPieceCount.StringToInteger();
-        //    }
-        //    else
-        //    {
-        //        SelectedConsignment.PiecePrice = null;
-        //        SelectedConsignment.PieceQuantity = null;
-        //    }
-        //}
-
         private void SaveChangesToProduct()
         {
 
@@ -337,6 +319,7 @@ namespace StorageWpfApp.ViewModel
                     SaveChangesToProduct();
                     Messenger.Default.Send<UpdateProducts>(null);
                     _db.SaveChanges();
+                    MessageBox.Show(PiecePriceCalculated);
                     window.Close();
                 },
                 window => CheckAll()
