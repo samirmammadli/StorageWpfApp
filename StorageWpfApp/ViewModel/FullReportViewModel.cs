@@ -28,6 +28,13 @@ namespace StorageWpfApp.ViewModel
             set => Set(ref _totalIncome, value);
         }
 
+        private string _totalSoldProductsAmount;
+        public string TotalSoldProductsAmount
+        {
+            get { return _totalSoldProductsAmount; }
+            set => Set(ref _totalSoldProductsAmount, value);
+        }
+
         private void Calculate()
         {
             var invoices = Invoices.Cast<Invoice>();
@@ -39,6 +46,8 @@ namespace StorageWpfApp.ViewModel
             //MessageBox.Show(singleProductsSellingPrice.ToString());
             //MessageBox.Show(pieceProductsSellingPrice.ToString());
 
+
+            TotalSoldProductsAmount = invoices.Sum(i => i.AmountToPay).ToString("#,###0.00") + " AZN";
             TotalIncome = (totalInvoicesSold - singleProductsSellingPrice - pieceProductsSellingPrice).ToString("#,###0.00") + " AZN";
         }
 

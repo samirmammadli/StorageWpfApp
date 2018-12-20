@@ -29,7 +29,7 @@
             <RowDefinition Height="6*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <GroupBox Margin="5" Style="{x:Null}" Header="Накладные">
+        <GroupBox Margin="5" Header="Накладные">
             <DataGrid
                   Height="Auto"
                   MinHeight="200"
@@ -81,7 +81,7 @@
                 <TextBlock>Продано товаров на сумму:</TextBlock>
             </StatusBarItem>
             <StatusBarItem>
-                <TextBox Style="{x:Null}" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Text="{Binding ProductsSoldSum}" IsReadOnly="True"></TextBox>
+                <TextBox Style="{x:Null}" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Text="{Binding TotalSoldProductsAmount}" IsReadOnly="True"></TextBox>
             </StatusBarItem>
             <Separator/>
 
