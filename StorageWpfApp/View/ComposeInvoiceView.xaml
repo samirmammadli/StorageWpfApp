@@ -6,9 +6,11 @@
         xmlns:local="clr-namespace:StorageWpfApp.View"
         WindowStartupLocation="CenterOwner"
         mc:Ignorable="d"
-        Title="Накладная" Height="800" Width="1250"
+        Title="Накладная" Height="800" Width="1280"
+        MinWidth="1280"
         Name="ComposeInvoice"
-        Background="#fafafa">
+        Background="#fafafa"
+        Language="ru-Ru">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,18 +23,18 @@
                     Key="Esc"
                     Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=ComposeInvoice}" />
     </Window.InputBindings>
-    <Grid>
+    <Grid Width="Auto">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto" MinWidth="328"/>
+            <ColumnDefinition Width="Auto" MinWidth="262"/>
+            <ColumnDefinition Width="*" MinWidth="652"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Margin="5" Header="Операции с товаром" Style="{x:Null}">
+        <GroupBox HorizontalAlignment="Stretch" Margin="5,5,0,5" Header="Операции с товаром" Style="{x:Null}">
             <Grid Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -50,8 +52,8 @@
                 </StackPanel>
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                     <Button Command="{Binding SaveInvoiceCommand}" CommandParameter="{Binding ElementName=ComposeInvoice}" HorizontalAlignment="Right" Width="100">Сохранить</Button>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1">
+                </StackPanel>
+                <StackPanel Grid.Column="1">
                     <Label>Штучный товар:</Label>
                     <StackPanel Orientation="Horizontal">
                         <Button Command="{Binding AddPieceCons}" CommandParameter="{Binding ElementName=ComposeInvoice}" HorizontalAlignment="Right" Width="100">Добавить..</Button>
@@ -59,7 +61,7 @@
                 </StackPanel>
             </Grid>
         </GroupBox>
-        <GroupBox Margin="0,5,0,5" Grid.Column="1" Style="{x:Null}" Header="Операции с клиентом">
+        <GroupBox Margin="5,5,0,5" HorizontalAlignment="Stretch" Grid.Column="1" Style="{x:Null}" Header="Операции с клиентом" Width="256">
             <Grid Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -82,8 +84,8 @@
             </Grid>
         </GroupBox>
 
-        <GroupBox Margin="5" Grid.Column="2" Header="Итог" Style="{x:Null}">
-            <Grid>
+        <GroupBox HorizontalAlignment="Stretch" Margin="5" Grid.Column="2" Header="Итог" Style="{x:Null}">
+            <Grid HorizontalAlignment="Left" Width="300">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>

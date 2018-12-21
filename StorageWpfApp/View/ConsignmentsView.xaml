@@ -12,7 +12,8 @@
         x:Name="Consignments"
         WindowStartupLocation="CenterOwner"
         WindowState="Maximized"
-        Background="#fafafa">
+        Background="#fafafa"
+        Language="ru-Ru">
     <Window.InputBindings>
         <KeyBinding 
                     Key="Esc"

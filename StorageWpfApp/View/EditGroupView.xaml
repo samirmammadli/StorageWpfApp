@@ -12,6 +12,7 @@
         x:Name="EditGroupWindow"
         WindowStartupLocation="CenterOwner"
         Title="Редактор категорий" Height="480" Width="600"
+        Language="ru-Ru"
         >
     <Window.InputBindings>
         <KeyBinding 

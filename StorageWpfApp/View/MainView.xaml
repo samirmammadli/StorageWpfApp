@@ -11,6 +11,7 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Background="#fafafa"
              x:Name="MainWnd"
+             Language="ru-Ru"
              >
     <UserControl.InputBindings>
         <KeyBinding 

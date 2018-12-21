@@ -14,7 +14,8 @@
         Title="Редактор товаров" Height="215" Width="540"
         SizeToContent="Height"
         x:Name="AddProduct"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        Language="ru-Ru">
     <Window.InputBindings>
         <KeyBinding 
                     Key="Esc"

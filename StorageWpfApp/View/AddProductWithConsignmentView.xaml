@@ -13,7 +13,8 @@
         WindowStyle="SingleBorderWindow"
         Title="Редактор товаров" Height="570" Width="540"
         x:Name="AddWithConsignment"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        Language="ru-Ru">
     <Window.InputBindings>
         <KeyBinding 
                     Key="Esc"

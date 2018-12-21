@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         x:Name="AddConsignment"
         Title="Редактор партий" Height="560" Width="600"
-        Background="#fafafa">
+        Background="#fafafa"
+        Language="ru-Ru">
     <Window.InputBindings>
         <KeyBinding 
                     Key="Esc"

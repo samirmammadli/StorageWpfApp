@@ -13,6 +13,7 @@
         x:Name="Window"
         WindowState="Maximized"
         Background="#fafafa"
+        Language="ru-Ru"
         >
     <Window.Resources>
         <ResourceDictionary Source="../Resources/DataTemplates.xaml">
