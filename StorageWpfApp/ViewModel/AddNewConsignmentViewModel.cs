@@ -247,7 +247,8 @@ namespace StorageWpfApp.ViewModel
                     var addWnd = new Window
                     {
                         Content = new MainView(),
-                        DataContext = cont
+                        DataContext = cont,
+                        Title = "Выбор товара"
                     };
                     addWnd.Owner = mainWnd;
                     addWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;

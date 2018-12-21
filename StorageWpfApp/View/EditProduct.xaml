@@ -85,84 +85,8 @@
             </StackPanel>
             <StackPanel Visibility="{Binding IsPieceVisible}"  HorizontalAlignment="Left">
                 <Label Margin="10,0,0,0">Количество в упаковке:</Label>
-                <ContentControl Focusable="False" >
-                    <ContentControl.Template>
-                        <ControlTemplate>
-                            <Grid>
-                                <TextBox Margin="10,0,0,0" Width="150" x:Name="PPieceQuantity" Grid.Column="0" Text="{Binding PPieceQuantity, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
-                                <Button
-                                    Command="{Binding ClearSearchBox}"
-                                        Style="{StaticResource TbClearStyle}"
-                                        CommandParameter="{Binding ElementName=PPieceQuantity}"
-                                        Grid.Column="1">
-                                    <Image Style="{StaticResource clearImg}"/>
-                                </Button>
-                            </Grid>
-                        </ControlTemplate>
-                    </ContentControl.Template>
-                </ContentControl>
+                <TextBox IsEnabled="False" Margin="10,0,0,0" Width="150" x:Name="PPieceQuantity" Grid.Column="0" Text="{Binding PPieceQuantity, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
             </StackPanel>
-            <!--<StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                <StackPanel Grid.Row="0" HorizontalAlignment="Left">
-                    <Label Margin="10,0,0,0">Количество:</Label>
-                    <ContentControl Focusable="False">
-                        <ContentControl.Template>
-                            <ControlTemplate>
-                                <Grid>
-                                    <TextBox Margin="10,0,0,0" Width="150" x:Name="PCount" Grid.Column="0"  Text="{Binding PCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
-                                    <Button
-                                    Command="{Binding ClearSearchBox}"
-                                        Style="{StaticResource TbClearStyle}"
-                                        CommandParameter="{Binding ElementName=PCount}"
-                                        Grid.Column="1">
-                                        <Image Style="{StaticResource clearImg}"/>
-                                    </Button>
-                                </Grid>
-                            </ControlTemplate>
-                        </ContentControl.Template>
-                    </ContentControl>
-                </StackPanel>
-                
-                <StackPanel  HorizontalAlignment="Left">
-                    <Label Margin="10,0,0,0">Цена закупки:</Label>
-                    <ContentControl Focusable="False" >
-                        <ContentControl.Template>
-                            <ControlTemplate>
-                                <Grid>
-                                    <TextBox Margin="10,0,0,0" Width="150" x:Name="PBuy" Grid.Column="0"  Text="{Binding PBuyPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
-                                    <Button
-                                    Command="{Binding ClearSearchBox}"
-                                        Style="{StaticResource TbClearStyle}"
-                                        CommandParameter="{Binding ElementName=PBuy}"
-                                        Grid.Column="1">
-                                        <Image Style="{StaticResource clearImg}"/>
-                                    </Button>
-                                </Grid>
-                            </ControlTemplate>
-                        </ContentControl.Template>
-                    </ContentControl>
-                </StackPanel>
-
-                <StackPanel HorizontalAlignment="Left">
-                    <Label Margin="10,0,0,0">Цена продажи:</Label>
-                    <ContentControl Focusable="False">
-                        <ContentControl.Template>
-                            <ControlTemplate>
-                                <Grid>
-                                    <TextBox  Margin="10,0,0,0" Width="150" x:Name="PSellPrice" Grid.Column="0"  Text="{Binding PSellPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
-                                    <Button
-                                    Command="{Binding ClearSearchBox}"
-                                        Style="{StaticResource TbClearStyle}"
-                                        CommandParameter="{Binding ElementName=PSellPrice}"
-                                        Grid.Column="1">
-                                        <Image Style="{StaticResource clearImg}"/>
-                                    </Button>
-                                </Grid>
-                            </ControlTemplate>
-                        </ContentControl.Template>
-                    </ContentControl>
-                </StackPanel>
-            </StackPanel>-->
             <StackPanel Margin="0,15,0,0" Orientation="Horizontal">
                 <Button  IsDefault="True" Command="{Binding SaveChanges}" CommandParameter="{Binding ElementName=EditWindow}" Margin="10,5,5,5">Сохранить</Button>
                 <Button  Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=EditWindow}" Margin="5">Отмена</Button>

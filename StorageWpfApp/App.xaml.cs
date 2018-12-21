@@ -16,7 +16,7 @@ namespace StorageWpfApp
         public App()
         {
             var culture = new CultureInfo("en-US") { DateTimeFormat = CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat };
-
+            culture.NumberFormat.NumberGroupSeparator = " ";
             Thread.CurrentThread.CurrentUICulture = culture;
             Thread.CurrentThread.CurrentCulture = culture;
 

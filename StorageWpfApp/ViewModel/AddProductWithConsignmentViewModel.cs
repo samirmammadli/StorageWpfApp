@@ -73,6 +73,8 @@ namespace StorageWpfApp.ViewModel
         {
             if (IsConsignmentAddingSelected)
             {
+                bool sellPrice = PSellPrice.StringToDouble() < PBuyPrice.StringToDouble();
+
                 if (IsPieceAllowed)
                 {
                     if (PPieceCount.StringToInteger() <= 0)
@@ -85,7 +87,8 @@ namespace StorageWpfApp.ViewModel
 
                 if (string.IsNullOrWhiteSpace(PCount) || 
                     string.IsNullOrWhiteSpace(PBuyPrice) || 
-                    string.IsNullOrWhiteSpace(PSellPrice))
+                    string.IsNullOrWhiteSpace(PSellPrice) ||
+                    sellPrice)
                     return false;
             }
 

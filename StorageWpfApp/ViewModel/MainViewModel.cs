@@ -264,6 +264,47 @@ namespace StorageWpfApp.ViewModel
             ));
         }
 
+        private RelayCommand<UserControl> _deleteProduct;
+        public RelayCommand<UserControl> DeleteProduct
+        {
+            get => _deleteProduct ?? (_deleteProduct = new RelayCommand<UserControl>(
+                mainWnd =>
+                {
+                    var consignments = _db.Consignments.Where(x => x.Product == SelectedProduct);
+                    if (consignments != null && consignments.Count() > 0)
+                    {
+                        foreach (var item in consignments)
+                        {
+                            if (_db.PieceOrders.Any(x => x.Consignment == item) || _db.SingleOrders.Any(x => x.Consignment == item))
+                            {
+                                MessageBox.Show("На партии данного товара имеются накладные!", "Нельзя удалить!", MessageBoxButton.OK, MessageBoxImage.Hand);
+                                return;
+                            }
+                        }
+
+                        var result = MessageBox.Show("На данный товар имеются партии\nВсе партии будут так же удалены!\nУдалить?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            _db.Consignments.RemoveRange(consignments);
+                            _db.Products.Remove(SelectedProduct);
+                            _db.SaveChanges();
+                            MessageBox.Show("Товар успешно удален!", "Success", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        _db.Products.Remove(SelectedProduct);
+                        _db.SaveChanges();
+                        MessageBox.Show("Товар успешно удален!", "Success", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                    }
+
+                    
+                },
+                mainWnd => SelectedProduct != null
+            ));
+        }
+
         private RelayCommand<UserControl> _viewConsignments;
         public RelayCommand<UserControl> ViewConsignments
         {
