@@ -297,9 +297,7 @@ namespace StorageWpfApp.ViewModel
                         _db.Products.Remove(SelectedProduct);
                         _db.SaveChanges();
                         MessageBox.Show("Товар успешно удален!", "Success", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                    }
-
-                    
+                    } 
                 },
                 mainWnd => SelectedProduct != null
             ));

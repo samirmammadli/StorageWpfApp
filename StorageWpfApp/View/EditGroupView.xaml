@@ -11,9 +11,7 @@
         WindowStyle="SingleBorderWindow"
         x:Name="EditGroupWindow"
         WindowStartupLocation="CenterOwner"
-        Title="Редактор категорий" Height="480" Width="600"
-        Language="ru-Ru"
-        >
+        Title="Редактор категорий" Height="480" Width="600">
     <Window.InputBindings>
         <KeyBinding 
                     Key="Esc"

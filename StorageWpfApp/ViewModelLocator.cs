@@ -79,11 +79,13 @@ namespace StorageWpfApp
                 {
                     var index = rnd.Next(1, 150);
                     var prd = _db.Products.FirstOrDefault(p => p.Id == index);
-                    var cons = new Consignment { Date = new DateTime(rnd.Next(2015, 2019), rnd.Next(1, 13), rnd.Next(1, 28)), IsPieceAllowed = prd.IsPieceProduct, ProductId = index, PurchasePrice = rnd.Next(10, 150), Quantity = i, SellingPrice = rnd.Next(10, 150) };
+                    var purchPrice = rnd.Next(10, 150);
+                    var cons = new Consignment { Date = new DateTime(rnd.Next(2015, 2019), rnd.Next(1, 13), rnd.Next(1, 28)), IsPieceAllowed = prd.IsPieceProduct, ProductId = index, PurchasePrice = purchPrice, Quantity = i, SellingPrice = purchPrice + purchPrice * 0.20 };
                     if (prd.IsPieceProduct)
                     {
                         cons.CurrentPieceQuantity = prd.PieceQuantity.Value * i;
-                        cons.PiecePrice = rnd.Next(10, 150);
+                        var price = cons.SellingPrice / prd.PieceQuantity;
+                        cons.PiecePrice = price;
                     }
                     _db.Consignments.Add(cons);
                     _db.AddCodeToConsignment(cons);

@@ -7,8 +7,7 @@
         mc:Ignorable="d"
         x:Name="AddConsignment"
         Title="Редактор партий" Height="560" Width="600"
-        Background="#fafafa"
-        Language="ru-Ru">
+        Background="#fafafa">
     <Window.InputBindings>
         <KeyBinding 
                     Key="Esc"
@@ -39,7 +38,7 @@
                     <StackPanel Margin="0,0,0,10">
                         <StackPanel Margin="10">
                             <Label>Дата закупки:</Label>
-                            <DatePicker SelectedDate="{Binding ConsDate}" Width="150" HorizontalAlignment="Left"/>
+                            <DatePicker Language="ru-RU" SelectedDate="{Binding ConsDate}" Width="150" HorizontalAlignment="Left"/>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                             <StackPanel Grid.Row="0" HorizontalAlignment="Left">

@@ -11,7 +11,6 @@
         WindowStartupLocation="CenterOwner"
         Title="Добавить категорию" Height="220" Width="280"
         Background="#fafafa"
-        Language="ru-Ru"
         >
     <Window.InputBindings>
         <KeyBinding 

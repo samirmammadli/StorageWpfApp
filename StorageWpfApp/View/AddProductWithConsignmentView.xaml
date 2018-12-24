@@ -13,8 +13,7 @@
         WindowStyle="SingleBorderWindow"
         Title="Редактор товаров" Height="570" Width="540"
         x:Name="AddWithConsignment"
-        WindowStartupLocation="CenterOwner"
-        Language="ru-Ru">
+        WindowStartupLocation="CenterOwner">
     <Window.InputBindings>
         <KeyBinding 
                     Key="Esc"
@@ -120,7 +119,7 @@
                 <StackPanel>
                     <StackPanel Margin="10">
                         <Label>Дата закупки:</Label>
-                        <DatePicker SelectedDate="{Binding ConsDate}" Width="150" HorizontalAlignment="Left"/>
+                        <DatePicker Language="ru-RU" SelectedDate="{Binding ConsDate}" Width="150" HorizontalAlignment="Left"/>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                         <StackPanel Grid.Row="0" HorizontalAlignment="Left">

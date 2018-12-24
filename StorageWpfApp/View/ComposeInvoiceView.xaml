@@ -10,7 +10,7 @@
         MinWidth="1280"
         Name="ComposeInvoice"
         Background="#fafafa"
-        Language="ru-Ru">
+        >
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -98,19 +98,19 @@
 
                 <StackPanel Grid.Row="0" Grid.Column="0" Margin="5,0,0,0">
                     <Label>Дата накладной:</Label>
-                    <DatePicker Width="100" HorizontalAlignment="Left" SelectedDate="{Binding InvoiceDate}"/>
+                    <DatePicker Language="ru-RU" Width="100" HorizontalAlignment="Left" SelectedDate="{Binding InvoiceDate}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
                     <Label>Сумма без скидок:</Label>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding TotalPriceWithoutDiscount}" IsReadOnly="True" Width="100" />
+                        <TextBox Text="{Binding TotalPriceWithoutDiscount, StringFormat=N2}" IsReadOnly="True" Width="100" />
                         <Label>AZN</Label>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="0" Margin="5,0,0,0">
                     <Label>Сумма с учетом скидок:</Label>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding TotalPriceWithDiscount}" IsReadOnly="True" Width="100" />
+                        <TextBox Text="{Binding TotalPriceWithDiscount, StringFormat=N2}" IsReadOnly="True" Width="100" />
                         <Label>AZN</Label>
                     </StackPanel>
                 </StackPanel>
@@ -124,14 +124,14 @@
                 <StackPanel Grid.Row="1" Grid.Column="0" Margin="5,0,0,0">
                     <Label>Дополнительная скидка:</Label>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding AdditionalTotalDiscount, UpdateSourceTrigger=PropertyChanged}" Width="100" />
+                        <TextBox Text="{Binding AdditionalTotalDiscount, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" Width="100" />
                         <Label>AZN</Label>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1" Margin="5,0,0,0">
                     <Label FontWeight="Bold">К оплате:</Label>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding TotalSumToPay}" IsReadOnly="True" FontWeight="Bold" Width="100" />
+                        <TextBox Text="{Binding TotalSumToPay,StringFormat=N2}" IsReadOnly="True" FontWeight="Bold" Width="100" />
                         <Label FontWeight="Bold">AZN</Label>
                     </StackPanel>
                 </StackPanel>

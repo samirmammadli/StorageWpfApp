@@ -12,8 +12,7 @@
         x:Name="Consignments"
         WindowStartupLocation="CenterOwner"
         WindowState="Maximized"
-        Background="#fafafa"
-        Language="ru-Ru">
+        Background="#fafafa">
     <Window.InputBindings>
         <KeyBinding 
                     Key="Esc"
@@ -159,7 +158,7 @@
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding PurchasePrice}" MinWidth="150" Header="Закупочная цена" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding SellingPrice}" MinWidth="150" Header="Цена продажи" Width="Auto"/>
                     <DataGridTextColumn CellStyle="{StaticResource PieceCells}" IsReadOnly="True" Binding="{Binding Product.PieceQuantity}" MinWidth="150" Header="Кол-во в упаковке" Width="Auto"/>
-                    <DataGridTextColumn CellStyle="{StaticResource PieceCells}" IsReadOnly="True" Binding="{Binding PiecePrice}" MinWidth="150" Header="Цена за штуку" Width="Auto"/>
+                    <DataGridTextColumn CellStyle="{StaticResource PieceCells}" IsReadOnly="True" Binding="{Binding PiecePrice, StringFormat=N2}" MinWidth="150" Header="Цена за штуку" Width="Auto"/>
                     <DataGridTextColumn CellStyle="{StaticResource PieceCells}" IsReadOnly="True" Binding="{Binding CurrentPieceQuantity}" MinWidth="150" Header="Всего штучных" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>

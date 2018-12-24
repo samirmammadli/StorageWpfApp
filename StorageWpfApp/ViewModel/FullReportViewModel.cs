@@ -18,8 +18,42 @@ namespace StorageWpfApp.ViewModel
         public ListCollectionView Invoices
         {
             get { return _invoices; }
-            set { _invoices = value; }
+            set => Set(ref _invoices, value);
         }
+
+        private DateTime _singleDate = DateTime.Now;
+        public DateTime SingleDate
+        {
+            get { return _singleDate; }
+            set
+            {
+                if (value <= DateTime.Now)
+                    Set(ref _singleDate, value);
+            }
+        }
+
+        private DateTime _dateFrom;
+        public DateTime DateFrom
+        {
+            get { return _dateFrom; }
+            set
+            {
+                if (value < DateTo)
+                    Set(ref _dateFrom, value);
+            }
+        }
+
+        private DateTime _dateTo;
+        public DateTime DateTo
+        {
+            get { return _dateTo; }
+            set
+            {
+                if (value <= DateTime.Now && value > DateFrom)
+                    Set(ref _dateTo, value);
+            }
+        }
+
 
         private string _totalIncome;
         public string TotalIncome
@@ -56,6 +90,9 @@ namespace StorageWpfApp.ViewModel
         {
             _db = db;
             Invoices  = new ListCollectionView( _db.Invoices.Local.ToObservableCollection());
+
+            DateTo = DateTime.Now;
+            DateFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
 
             Calculate();
         }

@@ -9,8 +9,7 @@
         Title="Клиенты" MinHeight="450" MinWidth="600"
         x:Name="ClientsWnd"
         WindowStartupLocation="CenterOwner"
-        Background="#fafafa"
-        Language="ru-Ru">
+        Background="#fafafa">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

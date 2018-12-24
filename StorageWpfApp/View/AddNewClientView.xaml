@@ -8,8 +8,7 @@
         Title="Клиенты" Height="270" Width="550"
         ResizeMode="NoResize"
         x:Name="AddNewClient"
-        Background="#fafafa"
-        Language="ru-Ru">
+        Background="#fafafa">
     <Window.InputBindings>
         <KeyBinding 
                     Key="Esc"
