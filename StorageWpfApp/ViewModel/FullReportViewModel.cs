@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using StorageWpfApp.Entities;
 using System;
 using System.Collections.Generic;
@@ -29,8 +30,18 @@ namespace StorageWpfApp.ViewModel
             {
                 if (value <= DateTime.Now)
                     Set(ref _singleDate, value);
+                else
+                    Set(ref _singleDate, DateTime.Now);
             }
         }
+
+        private bool _isSingleDate = true;
+        public bool IsSingleDate
+        {
+            get { return _isSingleDate; }
+            set => Set(ref _isSingleDate, value);
+        }
+
 
         private DateTime _dateFrom;
         public DateTime DateFrom
@@ -51,6 +62,8 @@ namespace StorageWpfApp.ViewModel
             {
                 if (value <= DateTime.Now && value > DateFrom)
                     Set(ref _dateTo, value);
+                else
+                    Set(ref _dateTo, DateTime.Now);
             }
         }
 
@@ -77,14 +90,35 @@ namespace StorageWpfApp.ViewModel
             var singleProductsSellingPrice = invoices.Where(i => i.SingleOrders != null).SelectMany(x => x.SingleOrders).Sum(x => x.Consignment.PurchasePrice * x.Count);
             var pieceProductsSellingPrice =  invoices.Where(i => i.PieceOrders != null).SelectMany(x => x.PieceOrders).Sum(x => (x.Consignment.PurchasePrice / x.Consignment.Product.PieceQuantity.Value) * x.Count);
 
-            //MessageBox.Show(singleProductsSellingPrice.ToString());
-            //MessageBox.Show(pieceProductsSellingPrice.ToString());
-
-
             TotalSoldProductsAmount = invoices.Sum(i => i.AmountToPay).ToString("#,###0.00") + " AZN";
             TotalIncome = (totalInvoicesSold - singleProductsSellingPrice - pieceProductsSellingPrice).ToString("#,###0.00") + " AZN";
         }
 
+        private RelayCommand _searchCommand;
+        public RelayCommand SearchCommand
+        {
+            get => _searchCommand ?? (_searchCommand = new RelayCommand(() => invoicesSearch()));
+        }
+
+        private void invoicesSearch()
+        {
+            if (IsSingleDate)
+            {
+                Invoices.Filter = i =>
+                {
+                    var invoice = i as Invoice;
+                    return invoice.Date.Date == SingleDate.Date;
+                };
+            }
+            else
+            {
+                Invoices.Filter = i =>
+                {
+                    var invoice = i as Invoice;
+                    return invoice.Date.Date >= DateFrom.Date && invoice.Date.Date <= DateTo.Date;
+                };
+            }
+        }
 
         public FullReportViewModel(ProjectContext db)
         {

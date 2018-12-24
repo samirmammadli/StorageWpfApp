@@ -177,11 +177,11 @@
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Product.Code}"  Header="Код товара" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Code}"  Header="Код партии" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Product.Name}" Header="Наименование" MinWidth="150" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.SellingPrice}" Header="Цена за еденицу" MinWidth="150" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.SellingPrice, StringFormat=N2}" Header="Цена за еденицу" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Quantity}" Header="Доступное кол-во" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding Count}" Header="Количество" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding Discount}" Header="Скидка на ед." MinWidth="100" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Sum}" Header="Сумма" MinWidth="150" Width="*"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Sum, StringFormat=N2}" Header="Сумма" MinWidth="150" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
@@ -225,7 +225,7 @@
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Product.Code}"  Header="Код товара" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Code}"  Header="Код партии" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.Product.Name}" Header="Наименование" MinWidth="150" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.PiecePrice}" Header="Цена за еденицу" MinWidth="150" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.PiecePrice, StringFormat=N2}" Header="Цена за еденицу" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Consignment.CurrentPieceQuantity}" Header="Доступное кол-во" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding Count}" Header="Количество" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="False" Binding="{Binding Discount}" Header="Скидка на ед." MinWidth="100" Width="Auto"/>

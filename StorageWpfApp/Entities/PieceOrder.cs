@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using StorageWpfApp.ExtensionMethods;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StorageWpfApp.Entities
@@ -55,7 +56,7 @@ namespace StorageWpfApp.Entities
         {
             get
             {
-                return (Consignment.PiecePrice.Value - Discount) * Count;
+                return Math.Round((Consignment.PiecePrice.Value - Discount) * Count, 2);
             }
         }
 

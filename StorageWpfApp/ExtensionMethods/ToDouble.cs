@@ -13,7 +13,7 @@ namespace StorageWpfApp.ExtensionMethods
         {
             double.TryParse(value, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign | NumberStyles.Float, CultureInfo.InvariantCulture, out double temp);
 
-            return temp;
+            return Math.Round(temp, 2);
         }
     }
 }

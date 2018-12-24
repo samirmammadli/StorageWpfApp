@@ -69,21 +69,21 @@ namespace StorageWpfApp.ViewModel
         private double _totalPriceWithDiscount;
         public double TotalPriceWithDiscount
         {
-            get => _totalPriceWithDiscount;
+            get => Math.Round(_totalPriceWithDiscount,2);
             set => Set(ref _totalPriceWithDiscount, value);
         }
 
         private double _totalPriceWithoutDiscount;
         public double TotalPriceWithoutDiscount
         {
-            get => _totalPriceWithoutDiscount;
+            get => Math.Round(_totalPriceWithoutDiscount, 2);
             set => Set(ref _totalPriceWithoutDiscount, value);
         }
 
         private double _totalSumToPay;
         public double TotalSumToPay
         {
-            get => _totalSumToPay;
+            get => Math.Round(_totalSumToPay, 2);
             set => Set(ref _totalSumToPay, value);
         }
 
@@ -320,7 +320,7 @@ namespace StorageWpfApp.ViewModel
                         if (_errorMessage != null)
                             msg = _errorMessage;
                         MessageBox.Show(msg, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                        msg = null;
+                        _errorMessage = null;
                     }
                 },
                 wnd => CheckAll()
@@ -470,7 +470,7 @@ namespace StorageWpfApp.ViewModel
 
         private void CalculateTotalSum()
         {
-            totalSumWithDiscountTemp = SingleOrders.Sum(x => x.Sum) + PieceOrders.Sum(x => x.Sum);
+            totalSumWithDiscountTemp = Math.Round(SingleOrders.Sum(x => x.Sum) + PieceOrders.Sum(x => x.Sum), 2);
 
             if (AdditionalTotalDiscount.StringToDouble() > totalSumWithDiscountTemp)
             {

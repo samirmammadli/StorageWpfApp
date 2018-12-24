@@ -35,12 +35,13 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <RadioButton x:Name="SingleDateRbtn" IsChecked="True" Grid.Row="0" Content="Конкретная дата" Height="25" VerticalAlignment="Top"/>
+                <RadioButton x:Name="SingleDateRbtn" IsChecked="{Binding IsSingleDate}" Grid.Row="0" Content="Конкретная дата" Height="25" VerticalAlignment="Top"/>
                 <DatePicker Language="ru-RU" IsEnabled="{Binding ElementName=SingleDateRbtn, Path=IsChecked}" SelectedDate="{Binding SingleDate}" Margin="20,0,0,0" HorizontalAlignment="Left" Grid.Column="1" Width="100"></DatePicker>
                 <RadioButton Name="FromToRbtn" Grid.Row="1" Content="Диапазон"/>
                 <Grid HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1">
@@ -55,6 +56,7 @@
                     <Label IsEnabled="{Binding ElementName=FromToRbtn, Path=IsChecked}" Grid.Column="2">По:</Label>
                     <DatePicker Language="ru-RU" IsEnabled="{Binding ElementName=FromToRbtn, Path=IsChecked}" SelectedDate="{Binding DateTo}" Grid.Column="3" Width="100"></DatePicker>
                 </Grid>
+                <Button Command="{Binding SearchCommand}" Margin="20,0,0,0" Grid.Column="2">Поиск</Button>
             </Grid>
         </GroupBox>
         <GroupBox Grid.Row="1" Margin="5" Header="Накладные">

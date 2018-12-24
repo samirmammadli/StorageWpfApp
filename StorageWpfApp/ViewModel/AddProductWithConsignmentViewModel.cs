@@ -260,14 +260,14 @@ namespace StorageWpfApp.ViewModel
                     Date = ConsDate,
                     Product = SelectedProduct,
                     Quantity = PCount.StringToInteger(),
-                    PurchasePrice = PBuyPrice.StringToDouble(),
-                    SellingPrice = PSellPrice.StringToDouble(),
+                    PurchasePrice = Math.Round(PBuyPrice.StringToDouble(),2),
+                    SellingPrice = Math.Round(PSellPrice.StringToDouble(), 2),
                     IsPieceAllowed = IsPieceAllowed
                 };
 
                 if (IsPieceAllowed)
                 {
-                    SelectedConsignment.PiecePrice = PPieceSellPrice.StringToDouble();
+                    SelectedConsignment.PiecePrice = Math.Round(PPieceSellPrice.StringToDouble(),2);
                     SelectedConsignment.CurrentPieceQuantity = (int)SelectedProduct.PieceQuantity * SelectedConsignment.Quantity;
                 }
 

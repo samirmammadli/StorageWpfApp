@@ -109,29 +109,6 @@ namespace StorageWpfApp.ViewModel
             set => Set(ref _isPieceVisible, value);
         }
 
-        //private string _pBuyPrice = "";
-        //public string PBuyPrice
-        //{
-        //    get => _pBuyPrice;
-        //    set
-        //    {
-        //        if (value.IsDouble())
-        //            Set(ref _pBuyPrice, value);
-        //    }
-        //}
-
-
-        //private string _pSellPrice = "";
-        //public string PSellPrice
-        //{
-        //    get => _pSellPrice;
-        //    set
-        //    {
-        //        if (value.IsDouble())
-        //            Set(ref _pSellPrice, value);
-        //    }
-        //}
-
         private RelayCommand<TextBox> _clearSearchBox;
         public RelayCommand<TextBox> ClearSearchBox
         {
@@ -150,34 +127,6 @@ namespace StorageWpfApp.ViewModel
 
         private void SaveChangesToProduct()
         {
-            try
-            {
-                //SelectedProduct.PurchasePrice = double.Parse(PBuyPrice, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture);
-                //try
-                //{
-                //    SelectedProduct.SellingPrice = double.Parse(PSellPrice, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture);
-                //}
-                //catch (Exception)
-                //{
-
-                //    throw;
-                //}
-
-                //try
-                //{
-                //    SelectedProduct.Quantity = int.Parse(PCount);
-                //}
-                //catch (Exception)
-                //{
-
-                //    throw;
-                //}
-                
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Проверьте введенные значения!");
-            }
 
             SelectedProduct.Code = Pcode;
             SelectedProduct.Name = PName;
