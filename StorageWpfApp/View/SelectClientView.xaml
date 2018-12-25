@@ -166,7 +166,7 @@
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Surname}" Header="Фамилия" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding PhoneNumber}" Header="Моб. номер" MinWidth="150" Width="Auto"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Email}" Header="Почта" MinWidth="150" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Debit}" Header="Долг" MinWidth="150" Width="*"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding DebitSum}" Header="Долг" MinWidth="150" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>

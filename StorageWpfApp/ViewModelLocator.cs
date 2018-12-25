@@ -42,12 +42,12 @@ namespace StorageWpfApp
             _db.Groups.Load();
             _db.Products.Load();
             _db.Consignments.Load();
+            _db.Debts.Load();
+            _db.DebtPayments.Load();
             _db.Clients.Load();
             _db.SingleOrders.Load();
             _db.PieceOrders.Load();
-            _db.Debts.Load();
             _db.Invoices.Load();
-            _db.DebtPayments.Load();
         }
 
         private void FillDbWithFakeData()

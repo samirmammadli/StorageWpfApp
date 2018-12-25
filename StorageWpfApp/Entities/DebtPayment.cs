@@ -10,6 +10,8 @@ namespace StorageWpfApp.Entities
     {
         public int Id { get; set; }
 
+        public double Amount { get; set; }
+
         public DateTime Date { get; set; }
 
         public int DebtId { get; set; }

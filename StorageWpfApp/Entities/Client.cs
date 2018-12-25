@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace StorageWpfApp.Entities
 {
@@ -20,7 +22,37 @@ namespace StorageWpfApp.Entities
 
         public double Debit { get; set; }
 
-        public IEnumerable<Debt> Debts { get; set; }
+        public ICollection<Debt> Debts { get; set; }
+
+        [NotMapped]
+        public double DebitSum
+        {
+            get
+            {
+                if (Debts != null && Debts.Count() > 0)
+                {
+                    var payments = Debts.SelectMany(x => x.DebtPayments);
+                    double sum = 0;
+
+                    foreach (var item in payments)
+                    {
+                        sum += item.Amount;
+                    }
+                    return Debts.Sum(x => x.Amount) - sum;
+
+                    //if (payments != null && payments.FirstOrDefault() != null)
+                    //{
+                    //    return Debts.Sum(x => x.Amount) - payments.Sum(x => x.Amount);
+                    //}
+                    //else
+                    //{
+                    //    MessageBox.Show(Debts.Sum(x => x.Amount).ToString());
+                    //    return Debts.Sum(x => x.Amount);
+                    //}
+                }
+                return 0;
+            }
+        }
 
     }
 }

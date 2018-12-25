@@ -118,6 +118,8 @@ namespace StorageWpfApp.ViewModel
                     return invoice.Date.Date >= DateFrom.Date && invoice.Date.Date <= DateTo.Date;
                 };
             }
+
+            Calculate();
         }
 
         public FullReportViewModel(ProjectContext db)
@@ -127,8 +129,7 @@ namespace StorageWpfApp.ViewModel
 
             DateTo = DateTime.Now;
             DateFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-
-            Calculate();
+            invoicesSearch();
         }
 
     }

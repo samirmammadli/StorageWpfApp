@@ -214,6 +214,10 @@
     <Compile Include="Migrations\20181218082654_AddedIsFullyPayedPropertyToDebtColumn.designer.cs">
       <DependentUpon>20181218082654_AddedIsFullyPayedPropertyToDebtColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20181225123656_AddedAmountColumnToDebtPayments.cs" />
+    <Compile Include="Migrations\20181225123656_AddedAmountColumnToDebtPayments.designer.cs">
+      <DependentUpon>20181225123656_AddedAmountColumnToDebtPayments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ProjectContextModelSnapshot.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\AddNewConsignmentViewModel.cs" />
