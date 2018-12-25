@@ -32,23 +32,11 @@ namespace StorageWpfApp.Entities
                 if (Debts != null && Debts.Count() > 0)
                 {
                     var payments = Debts.SelectMany(x => x.DebtPayments);
-                    double sum = 0;
 
-                    foreach (var item in payments)
-                    {
-                        sum += item.Amount;
-                    }
-                    return Debts.Sum(x => x.Amount) - sum;
-
-                    //if (payments != null && payments.FirstOrDefault() != null)
-                    //{
-                    //    return Debts.Sum(x => x.Amount) - payments.Sum(x => x.Amount);
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show(Debts.Sum(x => x.Amount).ToString());
-                    //    return Debts.Sum(x => x.Amount);
-                    //}
+                    if (payments != null && payments.Any())
+                       return Debts.Sum(x => x.Amount) - payments.Sum(x => x.Amount);
+                    else
+                        return Debts.Sum(x => x.Amount);
                 }
                 return 0;
             }

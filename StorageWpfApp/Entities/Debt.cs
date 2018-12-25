@@ -8,6 +8,10 @@ namespace StorageWpfApp.Entities
 {
     public class Debt
     {
+        public Debt()
+        {
+            DebtPayments = new List<DebtPayment>();
+        }
         public int Id { get; set; }
 
         public int ClientId { get; set; }
