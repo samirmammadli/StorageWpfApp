@@ -35,6 +35,14 @@ namespace StorageWpfApp.ViewModel
             }
         }
 
+        private Invoice _selectedInvoice;
+        public Invoice SelectedInvoice
+        {
+            get { return _selectedInvoice; }
+            set => Set(ref _selectedInvoice, value);
+        }
+
+
         private bool _isSingleDate = true;
         public bool IsSingleDate
         {
@@ -98,6 +106,66 @@ namespace StorageWpfApp.ViewModel
         public RelayCommand SearchCommand
         {
             get => _searchCommand ?? (_searchCommand = new RelayCommand(() => invoicesSearch()));
+        }
+
+        private RelayCommand _deleteInvoice;
+        public RelayCommand DeleteInvoice
+        {
+            get => _deleteInvoice ?? (_deleteInvoice = new RelayCommand(() =>
+            {
+                using (var transaction = _db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        if (SelectedInvoice.Debt != null)
+                        {
+                            var payments = _db.DebtPayments.Where(x => x.Debt == SelectedInvoice.Debt);
+
+                            if (payments != null)
+                                _db.DebtPayments.RemoveRange(payments);
+
+                            _db.Debts.Remove(SelectedInvoice.Debt);
+                        }
+
+                        ReturnProductsToConsignments();
+                        if (SelectedInvoice.PieceOrders != null)
+                            _db.PieceOrders.RemoveRange(SelectedInvoice.PieceOrders);
+                        if (SelectedInvoice.SingleOrders != null)
+                            _db.SingleOrders.RemoveRange(SelectedInvoice.SingleOrders);
+                        _db.Invoices.Remove(SelectedInvoice);
+                        _db.SaveChanges();
+                        transaction.Commit();
+                        Calculate();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        var cons = SelectedInvoice.SingleOrders?.Select(x => x.Consignment).Union(SelectedInvoice.PieceOrders?.Select(x => x.Consignment)).Distinct();
+
+                        foreach (var item in cons)
+                        {
+                            _db.Entry<Consignment>(item).Reload();
+                        }
+                    }
+                }
+            },() => SelectedInvoice != null
+            ));
+        }
+
+        private void ReturnProductsToConsignments()
+        {
+            if (SelectedInvoice.SingleOrders != null)
+                foreach (var item in SelectedInvoice.SingleOrders)
+                {
+                    item.Consignment.Quantity += item.Count;
+                }
+
+            if (SelectedInvoice.PieceOrders != null)
+                foreach (var item in SelectedInvoice?.PieceOrders)
+                {
+                    item.Consignment.CurrentPieceQuantity += item.Count % item.Consignment.Product.PieceQuantity.Value;
+                    item.Consignment.Quantity += item.Count / item.Consignment.Product.PieceQuantity.Value;
+                }
         }
 
         private void invoicesSearch()

@@ -9,7 +9,9 @@
         WindowStartupLocation="CenterOwner"
         WindowState="Maximized"
         Background="#fafafa"
-        Title="FullReportView" MinWidth="1200" Height="450" Width="800">
+        Title="FullReportView"
+        MinHeight="800"
+        MinWidth="1200" Height="450" Width="800">
     <Window.InputBindings>
         <KeyBinding 
                     Key="Esc"
@@ -59,11 +61,13 @@
                 <Button Command="{Binding SearchCommand}" Margin="20,0,0,0" Grid.Column="2">Поиск</Button>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="1" Margin="5" Header="Накладные">
-            <DataGrid
+        <StackPanel Grid.Row="1" Margin="5">
+            <GroupBox  Header="Накладные">
+                <DataGrid
                   Height="Auto"
-                  MinHeight="200"
+                  MinHeight="400"
                   ItemsSource="{Binding Invoices}"
+                  SelectedItem="{Binding SelectedInvoice}"
                   HorizontalAlignment="Stretch"
                   AutoGenerateColumns="False"
                   HorizontalContentAlignment="Center"
@@ -73,39 +77,42 @@
                   CanUserDeleteRows="False"
                   SelectionMode="Single"
                   AlternationCount="2">
-                <DataGrid.CellStyle>
-                    <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
-                        <Setter Property="Height" Value="30"/>
-                        <Setter Property="Padding" Value="12,5,0,0" />
-                        <!--<Setter Property="Focusable" Value="False"/>-->
-                        <Style.Triggers>
-                            <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                <Setter Property="Background" Value="#c1c1c1" />
-                                <Setter Property="Foreground" Value="White"/>
-                                <Setter Property="BorderBrush" Value="#c1c1c1"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataGrid.CellStyle>
-                <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"  Header="Дата" MinWidth="100" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Id}"  Header="Номер" MinWidth="50" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" SortMemberPath="Client.Name" Header="Клиент" MinWidth="100" Width="Auto">
-                        <DataGridTextColumn.Binding>
-                            <MultiBinding Converter="{StaticResource NameSurnameConverter}">
-                                <Binding Path="Client.Name"/>
-                                <Binding Path="Client.Surname"/>
-                            </MultiBinding>
-                        </DataGridTextColumn.Binding>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalAmount}" Header="Сумма без скидок" MinWidth="50" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalDiscount, StringFormat=N2}" Header="Скидка" MinWidth="50" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding AmountToPay}" Header="К оплате" MinWidth="50" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalPayed}" Header="Оплачено" MinWidth="50" Width="Auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding DebtDisplay}" Header="Долг" MinWidth="50" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </GroupBox>
+                    <DataGrid.CellStyle>
+                        <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
+                            <Setter Property="Height" Value="30"/>
+                            <Setter Property="Padding" Value="12,5,0,0" />
+                            <!--<Setter Property="Focusable" Value="False"/>-->
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#c1c1c1" />
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="BorderBrush" Value="#c1c1c1"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn IsReadOnly="True" Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"  Header="Дата" MinWidth="100" Width="Auto"/>
+                        <DataGridTextColumn IsReadOnly="True" Binding="{Binding Id}"  Header="Номер" MinWidth="50" Width="Auto"/>
+                        <DataGridTextColumn IsReadOnly="True" SortMemberPath="Client.Name" Header="Клиент" MinWidth="100" Width="Auto">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource NameSurnameConverter}">
+                                    <Binding Path="Client.Name"/>
+                                    <Binding Path="Client.Surname"/>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalAmount}" Header="Сумма без скидок" MinWidth="50" Width="Auto"/>
+                        <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalDiscount, StringFormat=N2}" Header="Скидка" MinWidth="50" Width="Auto"/>
+                        <DataGridTextColumn IsReadOnly="True" Binding="{Binding AmountToPay}" Header="К оплате" MinWidth="50" Width="Auto"/>
+                        <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalPayed}" Header="Оплачено" MinWidth="50" Width="Auto"/>
+                        <DataGridTextColumn IsReadOnly="True" Binding="{Binding DebtDisplay}" Header="Долг" MinWidth="50" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+            <Button Command="{Binding DeleteInvoice}" Margin="0,5,5,5" HorizontalAlignment="Left" Width="100">Удалить</Button>
+        </StackPanel>
+        
         <StatusBar Height="25" Grid.Row="2">
             <StatusBarItem>
                 <TextBlock>Продано товаров на сумму:</TextBlock>
