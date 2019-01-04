@@ -158,13 +158,17 @@ namespace StorageWpfApp.ViewModel
                 foreach (var item in SelectedInvoice.SingleOrders)
                 {
                     item.Consignment.Quantity += item.Count;
+                    if (item.Consignment.IsPieceAllowed)
+                        item.Consignment.CurrentPieceQuantity += item.Count * item.Consignment.Product.PieceQuantity.Value;
                 }
 
             if (SelectedInvoice.PieceOrders != null)
                 foreach (var item in SelectedInvoice?.PieceOrders)
-                {
+                {                   
                     item.Consignment.CurrentPieceQuantity += item.Count % item.Consignment.Product.PieceQuantity.Value;
                     item.Consignment.Quantity += item.Count / item.Consignment.Product.PieceQuantity.Value;
+                    if (item.Consignment.CurrentPieceQuantity % item.Consignment.Product.PieceQuantity == 0)
+                        item.Consignment.Quantity++;
                 }
         }
 
