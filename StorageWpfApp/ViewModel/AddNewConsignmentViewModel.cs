@@ -317,7 +317,6 @@ namespace StorageWpfApp.ViewModel
                     SaveChangesToProduct();
                     Messenger.Default.Send<UpdateProducts>(null);
                     _db.SaveChanges();
-                    MessageBox.Show(PiecePriceCalculated);
                     window.Close();
                 },
                 window => CheckAll()
